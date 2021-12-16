@@ -1,21 +1,29 @@
 const express = require("express");
 const connection = require("./models").connection;
+const router = require("./routes");
+
 const app = express();
+
+app.use(express.json());
 
 let PORT = 8081;
 
+app.use("/api", router);
+
+//reset Route
 app.get("/reset", (req, res) => {
   connection
     .sync({ force: true })
     .then(() => {
       res.status(201).send({ message: "Database reset" });
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       res.status(500).send({ message: "Database reset failed" });
     });
 });
 
-app.use("/*", (res, req) => {
+app.use("/*", (req, res) => {
   res.status(200).send({ message: "App is working" });
 });
 

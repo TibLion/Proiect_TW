@@ -1,0 +1,20 @@
+
+//Global: 
+
+http://localhost:8081/reset
+--restart the database ( delete the tabels if there exists and create new ones)
+
+//
+
+//Items:
+
+http://localhost:8081/api/item/getAllItemsByUserId/{userId}
+-- get all the user items by userId
+
+//
+
+//User:
+http://localhost:8081/api/User//verifyUser/{email}/{password}
+-- get user account by email and password
+
+//

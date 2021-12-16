@@ -1,0 +1,23 @@
+const ItemsDB = require("./../models").Item;
+
+const controller = {
+  getAllItemsByUserId: async (req, res) => {
+    const { userId } = req.params;
+    if (userId < 0) {
+      res.status(400).send({ message: "User doesn't exist" });
+    }
+    ItemsDB.findAll({
+      where: {
+        user_id: userId,
+      },
+    })
+      .then((items) => {
+        res.status(200).send({ items });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+};
+module.exports = controller;
