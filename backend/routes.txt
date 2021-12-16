@@ -19,8 +19,10 @@ http://localhost:8081/api/item/getAllItemsByUserId/{userId}
 -- get all the user items by userId
 
 http://localhost:8081/api/Item/getAllItemsByItemId/{itemId}
--- get all the user items by itemId
+-- get the item by itemId
 
+http://localhost:8081/api/Item/getAllItemsByName/{name}
+-- get the items by name
 
 //
 

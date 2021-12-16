@@ -4,5 +4,6 @@ const itemController = require("./../controllers").item;
 
 router.get("/getAllItemsByUserId/:userId", itemController.getAllItemsByUserId);
 router.get("/getAllItemsByItemId/:itemId", itemController.getAllItemsByItemId);
+router.get("/getAllItemsByName/:name", itemController.getAllItemsByName);
 
 module.exports = router;
