@@ -26,5 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     expirationDate: {
       type: DataTypes.DATE,
     },
+    isAvailable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
+    },
   });
 };

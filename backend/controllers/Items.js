@@ -53,5 +53,19 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  getAllItems: async (req, res) => {
+    ItemsDB.findAll({
+      // where: {
+      //   name: name,
+      // },
+    })
+      .then((items) => {
+        res.status(200).send({ items });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 module.exports = controller;

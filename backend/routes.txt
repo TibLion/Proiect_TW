@@ -15,6 +15,9 @@ http://localhost:8081/api/User//verifyUser/{email}/{password}
 
 //Items:
 
+http://localhost:8081/api/Item/getAllItems
+--get all the items
+
 http://localhost:8081/api/item/getAllItemsByUserId/{userId}
 -- get all the user items by userId
 
@@ -23,6 +26,8 @@ http://localhost:8081/api/Item/getAllItemsByItemId/{itemId}
 
 http://localhost:8081/api/Item/getAllItemsByName/{name}
 -- get the items by name
+
+
 
 //
 
