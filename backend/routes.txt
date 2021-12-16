@@ -7,14 +7,19 @@ http://localhost:8081/reset
 //
 
 //User:
-http://localhost:8081/api/User//verifyUser/{email}/{password}
+http://localhost:8081/api/User/verifyUser/{email}/{password}
 -- get user account by email and password
 
+
+http://localhost:8081/api/User/findByName/{name}
+-- find user by name
+
+http://localhost:8081/api/User/findById/{id}
+--find user by id
 //
 
 
 //Items:
-
 http://localhost:8081/api/Item/getAllItems
 --get all the items
 
