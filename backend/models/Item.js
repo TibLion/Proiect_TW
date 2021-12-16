@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     category: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
+    },
+    expirationDate: {
+      type: DataTypes.DATE,
     },
   });
 };

@@ -3,5 +3,6 @@ const router = express.Router();
 const itemController = require("./../controllers").item;
 
 router.get("/getAllItemsByUserId/:userId", itemController.getAllItemsByUserId);
+router.get("/getAllItemsByItemId/:itemId", itemController.getAllItemsByItemId);
 
 module.exports = router;
