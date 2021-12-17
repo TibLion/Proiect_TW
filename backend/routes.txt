@@ -55,5 +55,18 @@ http://localhost:8081/api/item/postItem
       "expirationDate": "expirationDate",
       "isAvailable": isAvailable
 }
+
+http://localhost:8081/api/item/putItem
+-- put item 
+{
+    "id": 2,
+    "user_id": 2,
+    "name": "",
+    "description": "",
+    "quantity": 122,
+    "category": "",
+    "expirationDate": "2021-12-12T00:00:00.000Z",
+    "isAvailable": true
+}
 //
 

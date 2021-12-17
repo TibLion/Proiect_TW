@@ -100,5 +100,30 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  putItems: async (req, res) => {
+    ItemsDB.update(
+      {
+        user_id: req.body.user_id,
+        name: req.body.name,
+        description: req.body.description,
+        quantity: req.body.quantity,
+        category: req.body.category,
+        expirationDate: req.body.expirationDate,
+        isAvailable: req.body.isAvailable,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    )
+      .then((item) => {
+        res.status(200).send({ item });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 module.exports = controller;
