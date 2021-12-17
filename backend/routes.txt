@@ -16,7 +16,16 @@ http://localhost:8081/api/User/findByName/{name}
 
 http://localhost:8081/api/User/findById/{id}
 --find user by id
+
+http://localhost:8081/api/user/createNewUser
+-- post new user
+{
+    "email" : "",
+    "name": "",
+    "password": ""
+}
 //
+
 
 
 //Items:
@@ -32,7 +41,19 @@ http://localhost:8081/api/Item/getAllItemsByItemId/{itemId}
 http://localhost:8081/api/Item/getAllItemsByName/{name}
 -- get the items by name
 
+http://localhost:8081/api/Item//deleteItemById/{itemId}/{userID}
+--delete item by item id and user id
 
-
+http://localhost:8081/api/item/postItem
+-- post item
+{
+     "user_id": user_id,
+      "name": "name",
+      "description": "description",
+      "quantity": quantity,
+      "category": "category",
+      "expirationDate": "expirationDate",
+      "isAvailable": isAvailable
+}
 //
 

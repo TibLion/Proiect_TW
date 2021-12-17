@@ -54,6 +54,20 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  createNewUser: async (req, res) => {
+    UserDB.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    })
+      .then((user) => {
+        res.status(200).send({ user });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;

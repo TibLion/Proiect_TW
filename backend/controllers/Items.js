@@ -54,13 +54,46 @@ const controller = {
       });
   },
   getAllItems: async (req, res) => {
-    ItemsDB.findAll({
-      // where: {
-      //   name: name,
-      // },
+    ItemsDB.findAll({})
+      .then((items) => {
+        res.status(200).send({ items });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  deleteItemById: async (req, res) => {
+    const { itemId, userId } = req.params;
+    if (itemId < 0 && userId < 0) {
+      res.status(400).send({ message: "Item doesn't exist" });
+    }
+    ItemsDB.destroy({
+      where: {
+        id: itemId,
+        user_id: userId,
+      },
     })
       .then((items) => {
         res.status(200).send({ items });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  postItem: async (req, res) => {
+    ItemsDB.create({
+      user_id: req.body.user_id,
+      name: req.body.name,
+      description: req.body.description,
+      quantity: req.body.quantity,
+      category: req.body.category,
+      expirationDate: req.body.expirationDate,
+      isAvailable: req.body.isAvailable,
+    })
+      .then((item) => {
+        res.status(200).send({ item });
       })
       .catch((error) => {
         console.log(error);
