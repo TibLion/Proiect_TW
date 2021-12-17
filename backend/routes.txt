@@ -1,3 +1,9 @@
+// the app use mysql so, you need this type of database. 
+Personaly I use xampp to start the server and also to postman to test the solutions.
+Before you start the server make sure you have a databse with "foodwaste" name. 
+(you can see more info in the config folder -> db.js)
+Also, to create the tables use the /reset route
+
 
 //Global: 
 
