@@ -76,3 +76,24 @@ http://localhost:8081/api/item/putItem
 }
 //
 
+
+//FriendshipRequest
+
+http://localhost:8081/api/friendshipRequest/postFrRequest
+-- post friendshipRequest
+
+{
+    "sender_id": 1,
+    "receiver_id": 2,
+    "date": "2021-12-12"
+}
+
+http://localhost:8081/api/friendshipRequest/getAllReceivedFriendRequests/{receiver_id}
+-- get all the friend request by receiver_id
+
+http://localhost:8081/api/friendshipRequest/deleteFriendRequests/{id}
+--delete the friendshipRequest by id
+
+
+
+//
