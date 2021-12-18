@@ -97,3 +97,48 @@ http://localhost:8081/api/friendshipRequest/deleteFriendRequests/{id}
 
 
 //
+
+//Item request
+http://localhost:8081/api/itemRequest/getAllByReceiverId/1
+-- get all the request got by user id (receiver)
+
+http://localhost:8081/api/itemRequest/getAllBySenderId/1
+-- get all the request made by user id (sender)
+
+
+http://localhost:8081/api/itemRequest/postItemRequest
+-- post item request
+
+{
+    "sender_id": 1,
+    "receiver_id": 2,
+    "date": "2021-12-12",
+    "item_id": 1,
+    "status": "PENDING"
+    }
+
+
+//
+
+// Friendship Relationship
+
+http://localhost:8081/api/friendshipRelation/postFriendShip
+--post friendship Relationship
+
+{
+    "sender_id": 2,
+    "receiver_id": 1,
+    "category": "Lactate"
+    }
+
+
+http://localhost:8081/api/friendshipRelation/getFriendshipRel/{user_id}
+-- get all the friendship relation by user
+
+http://localhost:8081/api/friendshipRelation/putFriendShip
+-- modify the Friendship
+
+
+http://localhost:8081/api/friendshipRelation/deleteFriend/{frindshipRel_id}
+-- delete the Friendship by id
+//
