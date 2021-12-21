@@ -91,6 +91,7 @@ const controller = {
       category: req.body.category,
       expirationDate: req.body.expirationDate,
       isAvailable: req.body.isAvailable,
+      photo: req.body.photo,
     })
       .then((item) => {
         res.status(200).send({ item });
@@ -110,6 +111,7 @@ const controller = {
         category: req.body.category,
         expirationDate: req.body.expirationDate,
         isAvailable: req.body.isAvailable,
+        photo: req.body.photo,
       },
       {
         where: {

@@ -28,7 +28,8 @@ http://localhost:8081/api/user/createNewUser
 {
     "email" : "",
     "name": "",
-    "password": ""
+    "password": "",
+    "photo": ""
 }
 //
 
@@ -59,7 +60,8 @@ http://localhost:8081/api/item/postItem
       "quantity": quantity,
       "category": "category",
       "expirationDate": "expirationDate",
-      "isAvailable": isAvailable
+      "isAvailable": isAvailable,
+      "photo": ""
 }
 
 http://localhost:8081/api/item/putItem

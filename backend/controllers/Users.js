@@ -59,6 +59,7 @@ const controller = {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
+      photo: req.body.photo,
     })
       .then((user) => {
         res.status(200).send({ user });
