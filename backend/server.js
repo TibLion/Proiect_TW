@@ -1,10 +1,13 @@
 const express = require("express");
 const connection = require("./models").connection;
 const router = require("./routes");
+var cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 let PORT = 8081;
 

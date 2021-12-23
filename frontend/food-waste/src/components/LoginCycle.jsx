@@ -5,13 +5,18 @@ import Navbar from "./Navbar";
 import loginPhoto from "./../assests/image/login.svg";
 import registerPhoto from "./../assests/image/register.svg";
 
-function LoginCycle(setUser) {
+function LoginCycle(props) {
   const [switchLoginRegister, SetSwitchLoginRegister] = useState(1);
 
-  return returnLoginLayout(setUser);
+  return returnLoginLayout(props.setUser);
 }
 
 function returnLoginLayout(setUser) {
+  let accountInfo = {
+    email: "",
+    password: "",
+  };
+
   return (
     <div className="App">
       <Navbar />
@@ -26,39 +31,24 @@ function returnLoginLayout(setUser) {
             </p>
           </div>
 
-          <div className="login__container__form__inputs">
-            <input type="text" placeholder="Email" id="email" />
-            <input type="password" placeholder="Password" id="password" />
-          </div>
+          <form className="login__container__form__inputs">
+            <input
+              type="text"
+              placeholder="Email"
+              id="email"
+              onChange={(e) => (accountInfo.email = e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              onChange={(e) => (accountInfo.password = e.target.value)}
+            />
+          </form>
 
           <div
             className="button"
-            onClick={(e) => {
-              const email = document.getElementById("email").value;
-              const pass = document.getElementById("password").value;
-
-              const URL =
-                "http://localhost:8081/api/user/verifyUser/" +
-                email +
-                "/" +
-                pass;
-              console.log(URL);
-
-              fetch(URL, {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                mode: "no-cors",
-                method: "GET",
-              })
-                .then((res) => res.json())
-                .then((result) => {
-                  console.log(result);
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            }}
+            onClick={(e) => submitLogin(accountInfo, setUser)}
           >
             <span>Login</span> <span>{"->"}</span>
           </div>
@@ -66,6 +56,30 @@ function returnLoginLayout(setUser) {
       </div>
     </div>
   );
+}
+
+async function submitLogin(accountInfo, setUser) {
+  {
+    console.log(accountInfo);
+    const URL =
+      "http://localhost:8081/api/user/verifyUser/" +
+      accountInfo.email +
+      "/" +
+      accountInfo.password;
+    console.log(URL);
+
+    await fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        // setUser(result);
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 export default LoginCycle;
