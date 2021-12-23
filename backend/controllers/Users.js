@@ -55,6 +55,8 @@ const controller = {
       });
   },
   createNewUser: async (req, res) => {
+    console.log(req.body);
+
     UserDB.create({
       name: req.body.name,
       email: req.body.email,
@@ -62,7 +64,7 @@ const controller = {
       photo: req.body.photo,
     })
       .then((user) => {
-        res.status(200).send({ user });
+        res.status(200).send(user);
       })
       .catch((error) => {
         console.log(error);

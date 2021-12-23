@@ -22,10 +22,20 @@ function Navbar(props) {
   };
 
   //this informations help us to show the user that he is connected
-  const userInformations = {
-    photo: "",
-    name: "",
+  let userInformations = {
+    photo: "http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png",
+    name: "Login",
   };
+
+  //if I get infos from props, I show them
+  if (props.info != undefined || props.info != null) {
+    if (props.info.photo != null) {
+      console.log(props.info.photo);
+      userInformations.photo = props.info.photo;
+    }
+    if (props.info.name != null) userInformations.name = props.info.name;
+    console.log(props.info, userInformations);
+  }
 
   return returnNavbar(menuState, notifications, userInformations);
 }
@@ -76,7 +86,6 @@ function returnNavbar(menuState, notifications, userInformations) {
 
 //changes if the button is pressed
 function openMenu(isOpen, setOpen) {
-  console.log(isOpen);
   if (!isOpen) {
     return (
       <span
@@ -95,29 +104,16 @@ function openMenu(isOpen, setOpen) {
 
 //changes the informations about the user
 function dispalyUserInformations(userInformations) {
-  if (userInformations.photo.length < 1 && userInformations.name.length < 1) {
-    return (
-      <div className="row row--center">
-        <img
-          src={defaultUserPhoto}
-          alt="Default User Photo"
-          className="navbar__userPhoto"
-        />
-        <p className="navbar__userName">Login</p>
-      </div>
-    );
-  } else {
-    return (
-      <div className="row row--center">
-        <img
-          src={userInformations.photo}
-          alt="Default User Photo"
-          className="navbar__userPhoto"
-        />
-        <p className="navbar__userName">{userInformations.name}</p>
-      </div>
-    );
-  }
+  return (
+    <div className="row row--center">
+      <img
+        src={userInformations.photo}
+        alt="Default User Photo"
+        className="navbar__userPhoto"
+      />
+      <p className="navbar__userName">{userInformations.name}</p>
+    </div>
+  );
 }
 
 export default Navbar;
