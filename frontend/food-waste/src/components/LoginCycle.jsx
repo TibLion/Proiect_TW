@@ -70,7 +70,7 @@ function returnLoginLayout(setUser, setSwitchLoginRegister) {
 //Function which return all the popups in the page.
 function popupLogin() {
   return (
-    <div id="accountDoesntExist" class="displayNone">
+    <div id="accountDoesntExist" className="displayNone">
       <Popup status={false} message={"The account doesn't exist"} />
     </div>
   );
@@ -202,16 +202,16 @@ function returnRegisterLayout(setUser, setSwitchLoginRegister) {
 function popupRegister() {
   return (
     <div>
-      <div id="passwordDoesntMatch" class="displayNone">
+      <div id="passwordDoesntMatch" className="displayNone">
         <Popup status={false} message={"Password doesn't match!"} />
       </div>
-      <div id="accountCreated" class="displayNone">
+      <div id="accountCreated" className="displayNone">
         <Popup
           status={true}
           message={"Your account is created, please login"}
         />
       </div>
-      <div id="sameEmail" class="displayNone">
+      <div id="sameEmail" className="displayNone">
         <Popup status={false} message={"Your email is already used"} />
       </div>
     </div>
