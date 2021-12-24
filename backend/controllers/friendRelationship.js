@@ -1,4 +1,5 @@
 const friendRelDB = require("../models").FriendshipRelationship;
+const UsersDB = require("./../models").User;
 const { Op } = require("sequelize");
 
 const controller = {
@@ -10,14 +11,17 @@ const controller = {
     friendRelDB
       .findAll({
         where: {
-          [Op.or]: [
-            { sender_id: parseInt(userId) },
-            { receiver_id: parseInt(userId) },
-          ],
+          sender_id: parseInt(userId),
         },
+        include: [
+          {
+            model: UsersDB,
+            // where: ["sender_id = id"],
+          },
+        ],
       })
       .then((friendship) => {
-        res.status(200).send({ friendship });
+        res.status(200).send(friendship);
       })
       .catch((error) => {
         console.log(error);

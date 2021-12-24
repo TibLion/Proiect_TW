@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import LoginCycle from "./LoginCycle";
+import MainPage from "./MainPage";
 
 import Navbar from "./Navbar";
 
@@ -12,7 +13,7 @@ function Main() {
   else {
     const infoForNavbar = { name: user[0].name, photo: user[0].photo };
 
-    return ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow);
+    return ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user[0]);
   }
 }
 
@@ -20,7 +21,7 @@ function returnLoginCycle(setUser) {
   return <LoginCycle setUser={setUser} />;
 }
 
-function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow) {
+function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
   //Here I show the main components of the page when is logged In
 
   if (pageToShow === "main")
@@ -33,7 +34,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Main Page
+        <MainPage currentUser={user} />
       </div>
     );
   else if (pageToShow === "items")
