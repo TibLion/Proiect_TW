@@ -8,7 +8,6 @@ import Navbar from "./Navbar";
 function Main() {
   const [user, setUser] = useState(null);
   const [pageToShow, setPageToShow] = useState("main");
-
   if (!user) return returnLoginCycle(setUser);
   else {
     const infoForNavbar = { name: user[0].name, photo: user[0].photo };

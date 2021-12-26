@@ -1,10 +1,10 @@
 import React from "react";
 
 function CardFriend(props) {
-  return returnCardFriend(props.photo, props.name, props.category);
+  return returnCardFriend(props.photo, props.name, props.category, props.id);
 }
 
-function returnCardFriend(photo, name, category) {
+function returnCardFriend(photo, name, category, id) {
   return (
     <div className="card">
       <div className="card__friend">
@@ -21,12 +21,36 @@ function returnCardFriend(photo, name, category) {
         <div className="card__actions__edit">
           <span className="icon-pencil"></span>
         </div>
-        <div className="card__actions__delete">
+        <div
+          className="card__actions__delete"
+          onClick={() => {
+            deleteFriend(id);
+          }}
+        >
           <span className="icon-bin2"></span>
         </div>
       </div>
     </div>
   );
+}
+
+function deleteFriend(id) {
+  console.log(id);
+  if (id) {
+    const URL =
+      "http://localhost:8081/api/friendshipRelation/deleteFriend/" + id;
+
+    fetch(URL, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 export default CardFriend;

@@ -76,8 +76,8 @@ const controller = {
           id: friendID,
         },
       })
-      .then((items) => {
-        res.status(200).send({ items });
+      .then((friendship) => {
+        res.status(200).send({ friendship });
       })
       .catch((error) => {
         console.log(error);

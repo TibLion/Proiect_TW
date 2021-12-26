@@ -31,7 +31,7 @@ function returnItemsPart(data) {
     <div className="main__container__food">
       <p className="main__container__food__title">Food:</p>
       <div className="main__container__food__list">
-        {returnFilterOptions(data)}
+        {/* {returnFilterOptions(data)} */}
         <div className="main__container__food__list__items">
           {returnItemList(data)}
         </div>
@@ -55,7 +55,7 @@ function returnFilterOptions(data) {
 // return the filter options
 function generateFilterOptions(data) {
   return remove_duplicates(data)?.map((element) => {
-    return <div className="button">{element}</div>;
+    return <div className="filter__option">{element}</div>;
   });
 }
 
@@ -137,10 +137,17 @@ function returnFriendList(data) {
           photo={friend.User.photo}
           name={friend.User.name}
           category={friend.category}
+          id={friend.id}
         />
       );
     });
   }
+}
+
+//use this to force update
+function useForceUpdate() {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => value + 1); // update the state to force render
 }
 
 // there I call the api to get the friends from the current user
