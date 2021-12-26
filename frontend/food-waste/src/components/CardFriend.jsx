@@ -1,10 +1,17 @@
 import React from "react";
 
 function CardFriend(props) {
-  return returnCardFriend(props.photo, props.name, props.category, props.id);
+  return returnCardFriend(
+    props.photo,
+    props.name,
+    props.category,
+    props.id,
+    props.refresh,
+    props.val
+  );
 }
 
-function returnCardFriend(photo, name, category, id) {
+function returnCardFriend(photo, name, category, id, refresh, val) {
   return (
     <div className="card">
       <div className="card__friend">
@@ -25,6 +32,7 @@ function returnCardFriend(photo, name, category, id) {
           className="card__actions__delete"
           onClick={() => {
             deleteFriend(id);
+            refresh(!val);
           }}
         >
           <span className="icon-bin2"></span>

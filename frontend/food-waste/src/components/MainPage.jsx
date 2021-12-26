@@ -3,20 +3,23 @@ import CardFriend from "./CardFriend";
 import CardItems from "./CardItems";
 
 function MainPage(props) {
-  return returnMainPage(props.currentUser);
+  return ReturnMainPage(props.currentUser);
 }
 
 //function that return the elements of the main page
-function returnMainPage(infos) {
+function ReturnMainPage(infos) {
+  const [refresh, setRefresh] = useState(false);
+
   //friends is the array which contain all the friends of the current user
-  let friends = CreateFriendsList(infos);
+
+  let friends = CreateFriendsList(infos, refresh, setRefresh);
 
   //items is the array which contain all the items of the current user
   let items = CreateItemsList(infos);
 
   return (
     <div className="main__container">
-      {returnFriendPart(friends)}
+      {returnFriendPart(friends, refresh, setRefresh)}
 
       {returnItemsPart(items)}
     </div>
@@ -117,19 +120,19 @@ function CreateItemsList(infos) {
 //#region Friend
 
 // return the left part ( The friends part)
-function returnFriendPart(data) {
+function returnFriendPart(data, bool, refresh) {
   return (
     <div className="main__container__friends">
       <p className="main__container__friends__title"> Friends: </p>
       <div className="main__container__friends__list">
-        {returnFriendList(data)}
+        {returnFriendList(data, bool, refresh)}
       </div>
     </div>
   );
 }
 
 //return the generated Friend List
-function returnFriendList(data) {
+function returnFriendList(data, bool, refresh) {
   {
     return data?.map((friend) => {
       return (
@@ -138,6 +141,8 @@ function returnFriendList(data) {
           name={friend.User.name}
           category={friend.category}
           id={friend.id}
+          refresh={refresh}
+          val={bool}
         />
       );
     });
@@ -151,17 +156,21 @@ function useForceUpdate() {
 }
 
 // there I call the api to get the friends from the current user
-function CreateFriendsList(infos) {
-  let [friend, setFriend] = useState(null);
+function CreateFriendsList(infos, refresh, setRefresh) {
+  const [friend, setFriend] = useState(null);
+  let temp = refresh;
   const URL =
     "http://localhost:8081/api/friendshipRelation/getFriendshipRel/" + infos.id;
 
-  if (friend == null)
+  if (friend == null || temp == true)
     fetch(URL, {
       method: "GET",
     })
       .then((res) => res.json())
       .then((result) => {
+        console.log(result, refresh);
+        setRefresh(false);
+        temp = false;
         setFriend(result);
       })
       .catch((error) => {
