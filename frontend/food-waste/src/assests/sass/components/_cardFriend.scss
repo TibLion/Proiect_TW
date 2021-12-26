@@ -1,0 +1,46 @@
+.card {
+  &__friend {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 15vw;
+    height: 10vh;
+
+    &__photo {
+      $size: 50px;
+
+      width: $size;
+      height: $size;
+
+      border-radius: 100%;
+
+      object-fit: cover;
+
+      padding: 0 1.5em;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      &__name {
+        font-size: 25px;
+      }
+
+      &__category {
+        font-size: 15px;
+        color: $secondary;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      & ~ .card__actions {
+        display: flex;
+      }
+    }
+  }
+}

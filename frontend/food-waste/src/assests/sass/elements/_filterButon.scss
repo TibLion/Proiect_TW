@@ -1,0 +1,20 @@
+.filter__option {
+  background-color: $white;
+  border-radius: $border-radius;
+  color: $black;
+
+  padding: 1em 2em;
+  margin: 1em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  &--active,
+  &:first-child {
+    background-color: $secondary;
+    color: $white;
+  }
+}

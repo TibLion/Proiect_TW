@@ -1,0 +1,27 @@
+.card {
+  margin-bottom: 25px;
+
+  border-radius: $border-radius;
+
+  background-color: $white;
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: column;
+
+  &__actions {
+    display: none;
+    align-items: center;
+    justify-content: flex-end;
+
+    &:hover {
+      display: flex;
+    }
+
+    * {
+      margin: 0.5em;
+      cursor: pointer;
+    }
+  }
+}

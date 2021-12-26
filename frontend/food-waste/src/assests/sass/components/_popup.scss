@@ -1,0 +1,39 @@
+.popup {
+  position: fixed;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  right: 20px;
+  bottom: 20px;
+
+  background-color: $white;
+
+  width: 20vw;
+  height: 5vh;
+
+  border-radius: $border-radius;
+
+  &--succes {
+    $color: green;
+    border-bottom: solid 2px $color;
+
+    .popup__icon {
+      color: $color;
+
+      font-size: 25px;
+    }
+  }
+
+  &--error {
+    $color: red;
+    border-bottom: solid 2px $color;
+
+    .popup__icon {
+      color: $color;
+
+      font-size: 25px;
+    }
+  }
+}

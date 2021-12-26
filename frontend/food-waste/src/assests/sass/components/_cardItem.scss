@@ -1,0 +1,46 @@
+.card {
+  &:hover,
+  &:focus {
+    & .card__actions {
+      display: flex;
+    }
+  }
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+
+    &__photo {
+      $size: 100px;
+
+      width: $size;
+      height: $size;
+
+      border-radius: 100%;
+
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    &__content {
+      * {
+        margin: 0;
+      }
+
+      &__title {
+        font-size: 25px;
+      }
+
+      &__category {
+        font-size: 15px;
+
+        color: $secondary;
+      }
+    }
+
+    &__expirationDate {
+      margin-left: 15px;
+    }
+  }
+}
