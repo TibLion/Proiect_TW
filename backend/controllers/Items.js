@@ -12,7 +12,7 @@ const controller = {
       },
     })
       .then((items) => {
-        res.status(200).send({ items });
+        res.status(200).send(items);
       })
       .catch((error) => {
         console.log(error);
