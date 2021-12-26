@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CardFriend from "./CardFriend";
 
 function MainPage(props) {
   return returnMainPage(props.currentUser);
@@ -13,23 +14,12 @@ function returnMainPage(infos) {
         <p className="main__container__friends__title"> Friends: </p>
         <div className="main__container__friends__list">
           {friends?.map((friend) => {
-            console.log(friend);
             return (
-              <div className="card__friend">
-                <img
-                  src={friend.User.photo}
-                  alt=""
-                  className="card__friend__photo"
-                />
-                <div className="card__friend__info">
-                  <div className="card__friend__info__name">
-                    {friend.User.name}
-                  </div>
-                  <div className="card__friend__info__category">
-                    {friend.category}
-                  </div>
-                </div>
-              </div>
+              <CardFriend
+                photo={friend.User.photo}
+                name={friend.User.name}
+                category={friend.category}
+              />
             );
           })}
         </div>
