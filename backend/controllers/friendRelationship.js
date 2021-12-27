@@ -47,9 +47,7 @@ const controller = {
     friendRelDB
       .update(
         {
-          sender_id: req.body.sender_id,
-          receiver_id: req.body.receiver_id,
-          category: req.body.item_id,
+          category: req.body.category,
         },
         {
           where: {
