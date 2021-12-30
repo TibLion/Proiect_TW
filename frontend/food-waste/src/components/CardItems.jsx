@@ -1,4 +1,5 @@
 import React from "react";
+import { FacebookShareButton } from "react-share";
 
 function CardItems(props) {
   return returnCarditem(
@@ -35,7 +36,14 @@ function returnCarditem(photo, name, category, description, expirationDate) {
           <span className="icon-share"></span>
         </div>
         <div className="card__actions__socialMedia">
-          <span className="icon-share2"></span>
+          <FacebookShareButton
+            url={"https://github.com/BaltacMihai/Anti-Food-Waste-App"}
+            quote={"I don't want to waste " + name + ", so i share with you"}
+            hashtag={"#" + category}
+            description={description}
+          >
+            <span className="icon-share2"></span>
+          </FacebookShareButton>
         </div>
       </div>
     </div>
