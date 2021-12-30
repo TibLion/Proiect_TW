@@ -11,8 +11,8 @@ const controller = {
         receiver_id: userId,
       },
     })
-      .then((items) => {
-        res.status(200).send({ items });
+      .then((frReq) => {
+        res.status(200).send(frReq);
       })
       .catch((error) => {
         console.log(error);

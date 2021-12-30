@@ -10,7 +10,11 @@ function Main() {
   const [pageToShow, setPageToShow] = useState("main");
   if (!user) return returnLoginCycle(setUser);
   else {
-    const infoForNavbar = { name: user[0].name, photo: user[0].photo };
+    const infoForNavbar = {
+      name: user[0].name,
+      photo: user[0].photo,
+      id: user[0].id,
+    };
 
     return ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user[0]);
   }

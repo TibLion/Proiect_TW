@@ -13,7 +13,7 @@ const controller = {
         },
       })
       .then((itemReq) => {
-        res.status(200).send({ itemReq });
+        res.status(200).send(itemReq);
       })
       .catch((error) => {
         console.log(error);
@@ -32,7 +32,7 @@ const controller = {
         },
       })
       .then((itemReq) => {
-        res.status(200).send({ itemReq });
+        res.status(200).send(itemReq);
       })
       .catch((error) => {
         console.log(error);
@@ -50,7 +50,7 @@ const controller = {
         status: req.body.status,
       })
       .then((item) => {
-        res.status(200).send({ item });
+        res.status(200).send(item);
       })
       .catch((error) => {
         console.log(error);

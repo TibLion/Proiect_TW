@@ -16,11 +16,8 @@ function Navbar(props) {
 
   //this informations will be available from props
   //this are the notifications we have
-  const notifications = {
-    friendRequest: 6,
-    expireSoon: 5,
-    foodRequest: 3,
-  };
+  let notifications;
+  if (props.info) notifications = getTheNumberOfNptifications(props.info.id);
 
   //this informations help us to show the user that he is connected
   let userInformations = {
@@ -81,22 +78,7 @@ function returnNavbar(
 
           <div className="navbar__rightSide">
             {dispalyUserInformations(userInformations)}
-            <span className="navbar__icon navbar__icon--withNotification icon-users ">
-              <p className="navbar__icon__notification">
-                {notifications.friendRequest}
-              </p>
-            </span>
-            <span className="navbar__icon navbar__icon--withNotification icon-calendar">
-              <p className="navbar__icon__notification">
-                {notifications.expireSoon}
-              </p>
-            </span>
-            <span className="navbar__icon  navbar__icon--withNotification icon-spoon-knife">
-              <p className="navbar__icon__notification">
-                {notifications.foodRequest}
-              </p>
-            </span>
-
+            {returnNotifications(notifications)}
             {openMenu(menuState.toggleMenu, menuState.setToggleMenu)}
           </div>
         </div>
@@ -120,6 +102,35 @@ function returnNavbar(
           </div>
         </div>
       </div>
+    );
+}
+
+//return the Html notification content
+function returnNotifications(notifications) {
+  return (
+    <div className="row">
+      {returnNotification("icon-users", notifications.friendRequest)}
+      {returnNotification("icon-calendar", notifications.expireSoon)}
+      {returnNotification("icon-spoon-knife", notifications.foodRequest)}
+    </div>
+  );
+}
+
+//return every notiviation(if there are notif, show the number, if not, don't show anything)
+function returnNotification(icon, data) {
+  const className = "navbar__icon navbar__icon--withNotification " + icon;
+
+  if (data > 0)
+    return (
+      <span className={className}>
+        <p className={"navbar__icon__notification"}>{data}</p>
+      </span>
+    );
+  else
+    return (
+      <span className={className}>
+        <p></p>
+      </span>
     );
 }
 
@@ -161,6 +172,101 @@ function dispalyUserInformations(userInformations) {
       <p className="navbar__userName">{userInformations.name}</p>
     </div>
   );
+}
+
+function getTheNumberOfNptifications(userId) {
+  const notifications = {
+    friendRequest: GetNumberOfFriendRequest(userId),
+    expireSoon: GetNumberOfItemsThatExpireSoon(userId),
+    foodRequest: GetNumberOfRequestedFood(userId),
+  };
+
+  return notifications;
+}
+
+//get the number of friend Requests
+function GetNumberOfFriendRequest(userId) {
+  const [count, setCount] = useState(null);
+  let temp = null;
+  const URL =
+    "http://localhost:8081/api/friendshipRequest/getAllReceivedFriendRequests/" +
+    userId;
+
+  if (!count)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        temp = result.length;
+        setCount(temp);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  if (count) return count;
+}
+
+//get The number of Requested Food -Received
+function GetNumberOfRequestedFood(userId) {
+  const [count, setCount] = useState(null);
+  let temp = null;
+  const URL =
+    "http://localhost:8081/api/itemRequest/getAllByReceiverId/" + userId;
+
+  if (!count)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        temp = result.length;
+        setCount(temp);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  if (count) return count;
+}
+
+//get the number of items that expire soon
+function GetNumberOfItemsThatExpireSoon(userId) {
+  let temp = null;
+  let [item, setItem] = useState(null);
+
+  const URL = "http://localhost:8081/api/item/getAllItemsByUserId/" + userId;
+  if (item == null || temp == true)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        temp = false;
+        setItem(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  if (item != null) {
+    return item.filter((elem) => {
+      const elementDate = new Date(elem.expirationDate);
+
+      if (elementDate < nextweek()) return elem;
+    }).length;
+  }
+}
+
+function nextweek() {
+  var today = new Date();
+  var nextweek = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 7
+  );
+  return nextweek;
 }
 
 export default Navbar;
