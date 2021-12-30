@@ -4,6 +4,7 @@ function EditItems(props) {
   return returnEditItem(props.infos, props.setEdit, props.refreshAction);
 }
 
+//return the Html content
 function returnEditItem(info, close, refresh) {
   return (
     <div className="card__edit">
@@ -191,6 +192,7 @@ function remove_duplicates(arr) {
 
 //#endregion
 
+//we generate the date from ISO Dates (Data-Time) format from the DataBase to more readable one
 function generateData(data) {
   //I get the from the db the date in ISO Dates (Date-Time) format
   let createDate = new Date(data);
@@ -198,6 +200,7 @@ function generateData(data) {
   return createDate.toISOString().substr(0, 10);
 }
 
+//send the data
 async function sendTheData(data, setEdit, refresh) {
   const category = document.getElementsByClassName(
     "card__editItem__content__categories__category--current"

@@ -4,6 +4,7 @@ function EditFriend(props) {
   return returnEditFriend(props.data, props.setEdit, props.refresh);
 }
 
+//return the content
 function returnEditFriend(friendRelationship, setEdit, refresh) {
   return (
     <div className="card__edit">
@@ -55,6 +56,8 @@ function returnEditFriend(friendRelationship, setEdit, refresh) {
   );
 }
 
+//#region  categories region
+//return the categories
 function returnCategories(current) {
   const categories = generateCategories(current);
   let isFirst = true;
@@ -85,7 +88,7 @@ function returnCategories(current) {
       );
   });
 }
-
+//see the current category
 function selectCategory(e) {
   const event = e.target;
 
@@ -104,6 +107,7 @@ function selectCategory(e) {
   );
 }
 
+//if pressed on new category
 function displayNewCategory(e) {
   const event = e.target;
   event.style.display = "none";
@@ -117,6 +121,7 @@ function displayNewCategory(e) {
   );
 }
 
+//clear all the selected Categories
 function clearSelectedCategory() {
   const removeClass = document.getElementsByClassName(
     "card__editFriend__details__categories__category--current"
@@ -134,6 +139,7 @@ function clearSelectedCategory() {
   }
 }
 
+//generate the categories
 function generateCategories(current) {
   let categories = ["Vegan", "Loves Meat", "Lactose Intolerance"];
 
@@ -142,6 +148,7 @@ function generateCategories(current) {
   return remove_duplicates(categories);
 }
 
+//remove duplicates ( if i have same category 2 times show only one time)
 function remove_duplicates(arr) {
   let obj = {};
   let ret_arr = [];
@@ -157,6 +164,9 @@ function remove_duplicates(arr) {
   }
 }
 
+//#endregion
+
+//send the modifications
 async function sendTheData(id, setEdit, refresh) {
   const category = document.getElementsByClassName(
     "card__editFriend__details__categories__category--current"

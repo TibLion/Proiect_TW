@@ -78,6 +78,7 @@ function ReturnCarditem(
   }
 }
 
+//return the Html content
 function returnShare(
   name,
   category,
@@ -127,6 +128,7 @@ function returnShare(
   }
 }
 
+// change availability of the item
 async function changeAvailability(allInfos) {
   const URL = "http://localhost:8081/api/item/putItem";
 
@@ -157,6 +159,7 @@ async function changeAvailability(allInfos) {
     });
 }
 
+//delete function
 function deleteItem(allInfos) {
   if (allInfos.id && allInfos.user_id) {
     const URL =
@@ -178,6 +181,7 @@ function deleteItem(allInfos) {
   }
 }
 
+//edit function
 function returnEditItem(fullDetails, setEdit, refreshAction) {
   return (
     <EditItems
