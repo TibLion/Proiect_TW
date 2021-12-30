@@ -26,6 +26,7 @@ function Navbar(props) {
   let userInformations = {
     photo: "http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png",
     name: "Login",
+    itIsLoggedIn: false,
   };
 
   //This show us the informations about our page
@@ -38,8 +39,12 @@ function Navbar(props) {
   if (props.info != undefined || props.info != null) {
     if (props.info.photo != null) {
       userInformations.photo = props.info.photo;
+      userInformations.itIsLoggedIn = true;
     }
-    if (props.info.name != null) userInformations.name = props.info.name;
+    if (props.info.name != null) {
+      userInformations.name = props.info.name;
+      userInformations.itIsLoggedIn = true;
+    }
   }
 
   return returnNavbar(menuState, notifications, userInformations, pageSelector);
@@ -54,53 +59,68 @@ function returnNavbar(
   userInformations,
   pageSelector
 ) {
-  return (
-    <div className="nav">
-      <div className="row navbar">
-        <div className="navbar__leftSide">
-          <img src={logo} alt="logo" className="navbar__logo" />
-          <div className="navbar__searchBar">
-            <div className="input">
-              <input type="text" placeholder="What are you looking for?" />
-              <span className="searchBar__icon icon-search"></span>
-              <div className="input__options">
-                <div className="button button--active">Browse Items</div>
-                <div className="button">Browse People</div>
-                <div className="button">Browse in your Food</div>
-                <div className="button">Browse in your Friends</div>
+  if (userInformations.itIsLoggedIn)
+    return (
+      <div className="nav">
+        <div className="row navbar">
+          <div className="navbar__leftSide">
+            <img src={logo} alt="logo" className="navbar__logo" />
+            <div className="navbar__searchBar">
+              <div className="input">
+                <input type="text" placeholder="What are you looking for?" />
+                <span className="searchBar__icon icon-search"></span>
+                <div className="input__options">
+                  <div className="button button--active">Browse Items</div>
+                  <div className="button">Browse People</div>
+                  <div className="button">Browse in your Food</div>
+                  <div className="button">Browse in your Friends</div>
+                </div>
               </div>
             </div>
           </div>
+
+          <div className="navbar__rightSide">
+            {dispalyUserInformations(userInformations)}
+            <span className="navbar__icon navbar__icon--withNotification icon-users ">
+              <p className="navbar__icon__notification">
+                {notifications.friendRequest}
+              </p>
+            </span>
+            <span className="navbar__icon navbar__icon--withNotification icon-calendar">
+              <p className="navbar__icon__notification">
+                {notifications.expireSoon}
+              </p>
+            </span>
+            <span className="navbar__icon  navbar__icon--withNotification icon-spoon-knife">
+              <p className="navbar__icon__notification">
+                {notifications.foodRequest}
+              </p>
+            </span>
+
+            {openMenu(menuState.toggleMenu, menuState.setToggleMenu)}
+          </div>
         </div>
+        {displayTheMenu(
+          menuState.toggleMenu,
+          menuState.setToggleMenu,
+          pageSelector
+        )}
+      </div>
+    );
+  else
+    return (
+      <div className="nav">
+        <div className="row navbar">
+          <div className="navbar__leftSide">
+            <img src={logo} alt="logo" className="navbar__logo" />
+          </div>
 
-        <div className="navbar__rightSide">
-          {dispalyUserInformations(userInformations)}
-          <span className="navbar__icon navbar__icon--withNotification icon-users ">
-            <p className="navbar__icon__notification">
-              {notifications.friendRequest}
-            </p>
-          </span>
-          <span className="navbar__icon navbar__icon--withNotification icon-calendar">
-            <p className="navbar__icon__notification">
-              {notifications.expireSoon}
-            </p>
-          </span>
-          <span className="navbar__icon  navbar__icon--withNotification icon-spoon-knife">
-            <p className="navbar__icon__notification">
-              {notifications.foodRequest}
-            </p>
-          </span>
-
-          {openMenu(menuState.toggleMenu, menuState.setToggleMenu)}
+          <div className="navbar__rightSide">
+            {dispalyUserInformations(userInformations)}
+          </div>
         </div>
       </div>
-      {displayTheMenu(
-        menuState.toggleMenu,
-        menuState.setToggleMenu,
-        pageSelector
-      )}
-    </div>
-  );
+    );
 }
 
 //changes if the button is pressed
