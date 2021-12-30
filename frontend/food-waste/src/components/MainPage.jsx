@@ -15,13 +15,13 @@ function ReturnMainPage(infos) {
   let friends = CreateFriendsList(infos, refresh, setRefresh);
 
   //items is the array which contain all the items of the current user
-  let items = CreateItemsList(infos);
+  let items = CreateItemsList(infos, refresh, setRefresh);
 
   return (
     <div className="main__container">
       {returnFriendPart(friends, refresh, setRefresh)}
 
-      {returnItemsPart(items)}
+      {returnItemsPart(items, refresh, setRefresh)}
     </div>
   );
 }
@@ -29,14 +29,14 @@ function ReturnMainPage(infos) {
 //#region  Items
 
 //return the elements from the right part( the part with the items)
-function returnItemsPart(data) {
+function returnItemsPart(data, refresh, setRefresh) {
   return (
     <div className="main__container__food">
       <p className="main__container__food__title">Food:</p>
       <div className="main__container__food__list">
         {/* {returnFilterOptions(data)} */}
         <div className="main__container__food__list__items">
-          {returnItemList(data)}
+          {returnItemList(data, refresh, setRefresh)}
         </div>
       </div>
     </div>
@@ -78,32 +78,26 @@ function remove_duplicates(arr) {
   }
 }
 
-function returnItemList(data) {
-  console.log(data);
+function returnItemList(data, bool, refresh) {
   return data?.map((item) => {
-    return (
-      <CardItems
-        photo={item.photo}
-        name={item.name}
-        description={item.description}
-        category={item.category}
-        expirationDate={item.expirationDate}
-      />
-    );
+    return <CardItems item={item} refresh={refresh} val={bool} />;
   });
 }
 
 // we get through API the items based on current user
-function CreateItemsList(infos) {
+function CreateItemsList(infos, refresh, setRefresh) {
+  let temp = refresh;
   let [item, setItem] = useState(null);
-  const URL = "http://localhost:8081/api/item/getAllItemsByUserId/" + infos.id;
 
-  if (item == null)
+  const URL = "http://localhost:8081/api/item/getAllItemsByUserId/" + infos.id;
+  if (item == null || temp == true)
     fetch(URL, {
       method: "GET",
     })
       .then((res) => res.json())
       .then((result) => {
+        setRefresh(false);
+        temp = false;
         setItem(result);
       })
       .catch((error) => {
@@ -163,7 +157,6 @@ function CreateFriendsList(infos, refresh, setRefresh) {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result, refresh);
         setRefresh(false);
         temp = false;
         setFriend(result);
