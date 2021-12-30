@@ -79,9 +79,16 @@ function remove_duplicates(arr) {
 }
 
 function returnItemList(data, bool, refresh) {
-  return data?.map((item) => {
+  return data?.sort(compareDates).map((item) => {
     return <CardItems item={item} refresh={refresh} val={bool} />;
   });
+}
+
+function compareDates(first, second) {
+  const firstDate = new Date(first.expirationDate);
+  const secondDate = new Date(second.expirationDate);
+
+  return firstDate > secondDate ? 1 : -1;
 }
 
 // we get through API the items based on current user
