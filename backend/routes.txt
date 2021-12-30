@@ -48,6 +48,9 @@ http://localhost:8081/api/Item/getAllItemsByItemId/{itemId}
 http://localhost:8081/api/Item/getAllItemsByName/{name}
 -- get the items by name
 
+http://localhost:8081/api/Item/getAllItemsByName/{name}/{userId}
+-- get the item by name and userId
+
 http://localhost:8081/api/Item//deleteItemById/{itemId}/{userID}
 --delete item by item id and user id
 
@@ -136,6 +139,9 @@ http://localhost:8081/api/friendshipRelation/postFriendShip
 
 http://localhost:8081/api/friendshipRelation/getFriendshipRel/{user_id}
 -- get all the friendship relation by user
+
+ "http://localhost:8081/api/friendshipRelation/getFriendshipRel/{user_id}/{name}" +
+-- get all the friends with the searched Name
 
 http://localhost:8081/api/friendshipRelation/putFriendShip
 -- modify the Friendship

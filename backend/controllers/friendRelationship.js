@@ -28,6 +28,32 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  getFriendshipRelByName: async (req, res) => {
+    const { userId, userName } = req.params;
+    console.log(userName);
+    if (userId < 0) {
+      res.status(400).send({ message: "Friendship  doesn't exist" });
+    }
+    friendRelDB
+      .findAll({
+        where: {
+          sender_id: parseInt(userId),
+        },
+        include: [
+          {
+            model: UsersDB,
+            where: { name: userName },
+          },
+        ],
+      })
+      .then((friendship) => {
+        res.status(200).send(friendship);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
   postFriendShip: async (req, res) => {
     friendRelDB
       .create({

@@ -46,7 +46,23 @@ const controller = {
       },
     })
       .then((items) => {
-        res.status(200).send({ items });
+        res.status(200).send(items);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  getAllItemsByNameAndUserId: async (req, res) => {
+    const { name, userId } = req.params;
+    ItemsDB.findAll({
+      where: {
+        name: name,
+        user_id: userId,
+      },
+    })
+      .then((items) => {
+        res.status(200).send(items);
       })
       .catch((error) => {
         console.log(error);

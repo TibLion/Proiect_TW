@@ -17,7 +17,11 @@ function Navbar(props) {
   //this informations will be available from props
   //this are the notifications we have
   let notifications;
-  if (props.info) notifications = getTheNumberOfNptifications(props.info.id);
+  let id = 0;
+  if (props.info) {
+    notifications = getTheNumberOfNptifications(props.info.id);
+    id = props.info.id;
+  }
 
   //this informations help us to show the user that he is connected
   let userInformations = {
@@ -44,17 +48,21 @@ function Navbar(props) {
     }
   }
 
-  return returnNavbar(menuState, notifications, userInformations, pageSelector);
+  return returnNavbar(
+    menuState,
+    notifications,
+    userInformations,
+    pageSelector,
+    id
+  );
 }
-
-//TODO: When I am in login don't show all the items in the navbar: searchbar, notification Icons + menu
-
 //returns the html that navbar returns
 function returnNavbar(
   menuState,
   notifications,
   userInformations,
-  pageSelector
+  pageSelector,
+  id
 ) {
   if (userInformations.itIsLoggedIn)
     return (
@@ -64,13 +72,45 @@ function returnNavbar(
             <img src={logo} alt="logo" className="navbar__logo" />
             <div className="navbar__searchBar">
               <div className="input">
-                <input type="text" placeholder="What are you looking for?" />
+                <input
+                  type="text"
+                  placeholder="What are you looking for?"
+                  id="searchInput"
+                />
                 <span className="searchBar__icon icon-search"></span>
                 <div className="input__options">
-                  <div className="button button--active">Browse Items</div>
-                  <div className="button">Browse People</div>
-                  <div className="button">Browse in your Food</div>
-                  <div className="button">Browse in your Friends</div>
+                  <div
+                    className="button button--active"
+                    onClick={(e) => {
+                      SearchForItemsByName(e);
+                    }}
+                  >
+                    Browse Items
+                  </div>
+                  <div
+                    className="button"
+                    onClick={(e) => {
+                      SearchForUsersByName(e);
+                    }}
+                  >
+                    Browse People
+                  </div>
+                  <div
+                    className="button"
+                    onClick={(e) => {
+                      SearchForItemsByNameAndId(e, id);
+                    }}
+                  >
+                    Browse in your Food
+                  </div>
+                  <div
+                    className="button"
+                    onClick={(e) => {
+                      SearchForFriendByNameAndId(e, id);
+                    }}
+                  >
+                    Browse in your Friends
+                  </div>
                 </div>
               </div>
             </div>
@@ -105,6 +145,107 @@ function returnNavbar(
     );
 }
 
+function SearchForUsersByName(e) {
+  selectThisItem(e);
+
+  const name = document.getElementById("searchInput").value;
+
+  const URL = "http://localhost:8081/api/User/findByName/" + name;
+
+  if (name.length > 1)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+
+function SearchForItemsByName(e) {
+  selectThisItem(e);
+
+  const name = document.getElementById("searchInput").value;
+
+  const URL = "http://localhost:8081/api/Item/getAllItemsByName/" + name;
+
+  if (name.length > 1)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+
+function SearchForItemsByNameAndId(e, id) {
+  selectThisItem(e);
+
+  const name = document.getElementById("searchInput").value;
+
+  const URL =
+    "http://localhost:8081/api/Item/getAllItemsByName/" + name + "/" + id;
+
+  if (name.length > 1)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+
+function SearchForFriendByNameAndId(e, id) {
+  selectThisItem(e);
+
+  const name = document.getElementById("searchInput").value;
+  console.log(name);
+  const URL =
+    "http://localhost:8081/api/friendshipRelation/getFriendshipRel/" +
+    id +
+    "/" +
+    name;
+
+  if (name.length > 1)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+
+//
+function selectThisItem(e) {
+  clearSelectedSearchItem();
+  e.target.classList.add("button--active");
+}
+
+function clearSelectedSearchItem() {
+  const removeClass = document.getElementsByClassName("button--active");
+
+  for (let remove of removeClass) {
+    remove.classList.remove("button--active");
+  }
+}
+
+//#region  Notifications
+
 //return the Html notification content
 function returnNotifications(notifications) {
   return (
@@ -132,32 +273,6 @@ function returnNotification(icon, data) {
         <p></p>
       </span>
     );
-}
-
-//changes if the button is pressed
-function openMenu(isOpen, setOpen) {
-  if (!isOpen) {
-    return (
-      <span
-        className="navbar__icon icon-menu"
-        onClick={(e) => setOpen(!isOpen)}
-      ></span>
-    );
-  } else {
-    return (
-      <div>
-        <span
-          className="navbar__icon icon-cross"
-          onClick={(e) => setOpen(!isOpen)}
-        ></span>
-      </div>
-    );
-  }
-}
-
-//return the menu
-function displayTheMenu(isOpen, setOpen, pageSelector) {
-  if (isOpen) return <Menu changePages={pageSelector} display={setOpen} />;
 }
 
 //changes the informations about the user
@@ -268,5 +383,37 @@ function nextweek() {
   );
   return nextweek;
 }
+
+//#endregion
+
+//#region  Menu
+
+//changes if the button is pressed
+function openMenu(isOpen, setOpen) {
+  if (!isOpen) {
+    return (
+      <span
+        className="navbar__icon icon-menu"
+        onClick={(e) => setOpen(!isOpen)}
+      ></span>
+    );
+  } else {
+    return (
+      <div>
+        <span
+          className="navbar__icon icon-cross"
+          onClick={(e) => setOpen(!isOpen)}
+        ></span>
+      </div>
+    );
+  }
+}
+
+//return the menu
+function displayTheMenu(isOpen, setOpen, pageSelector) {
+  if (isOpen) return <Menu changePages={pageSelector} display={setOpen} />;
+}
+
+//#endregion
 
 export default Navbar;
