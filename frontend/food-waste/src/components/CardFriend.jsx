@@ -67,7 +67,6 @@ function ReturnCardFriend(
 }
 
 function deleteFriend(id) {
-  console.log(id);
   if (id) {
     const URL =
       "http://localhost:8081/api/friendshipRelation/deleteFriend/" + id;

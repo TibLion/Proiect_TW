@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FacebookShareButton } from "react-share";
+import EditItems from "./EditItems";
 
 function CardItems(props) {
   const refreshAction = {
     value: props.val,
     action: props.refresh,
   };
-  return returnCarditem(
+  return ReturnCarditem(
     props.item.photo,
     props.item.name,
     props.item.category,
@@ -18,7 +19,7 @@ function CardItems(props) {
   );
 }
 
-function returnCarditem(
+function ReturnCarditem(
   photo,
   name,
   category,
@@ -28,37 +29,53 @@ function returnCarditem(
   allInfos,
   refreshAction
 ) {
-  return (
-    <div className="card">
-      <div className="card__item">
-        <img className="card__item__photo" src={photo}></img>
-        <div className="card__item__content">
-          <p className="card__item__content__title">{name}</p>
-          <p className="card__item__content__category">{category}</p>
-          <p className="card__item__content__description">{description}</p>
+  const [edit, setEdit] = useState(false);
+  if (edit === false) {
+    return (
+      <div className="card">
+        <div className="card__item">
+          <img className="card__item__photo" src={photo}></img>
+          <div className="card__item__content">
+            <p className="card__item__content__title">{name}</p>
+            <p className="card__item__content__category">{category}</p>
+            <p className="card__item__content__description">{description}</p>
+          </div>
+        </div>
+        <p className="card__item__expirationDate">
+          {generateData(expirationDate)}
+        </p>
+        <div className="card__actions">
+          <div
+            className="card__actions__edit"
+            onClick={() => {
+              setEdit(true);
+            }}
+          >
+            <span className="icon-pencil"></span>
+          </div>
+          <div
+            className="card__actions__delete"
+            onClick={() => {
+              deleteItem(allInfos);
+              refreshAction.action(!refreshAction.value);
+            }}
+          >
+            <span className="icon-bin2"></span>
+          </div>
+          {returnShare(
+            name,
+            category,
+            description,
+            isAvailable,
+            allInfos,
+            refreshAction
+          )}
         </div>
       </div>
-      <p className="card__item__expirationDate">
-        {generateData(expirationDate)}
-      </p>
-      <div className="card__actions">
-        <div className="card__actions__edit">
-          <span className="icon-pencil"></span>
-        </div>
-        <div className="card__actions__delete">
-          <span className="icon-bin2"></span>
-        </div>
-        {returnShare(
-          name,
-          category,
-          description,
-          isAvailable,
-          allInfos,
-          refreshAction
-        )}
-      </div>
-    </div>
-  );
+    );
+  } else {
+    return returnEditItem(allInfos, setEdit, refreshAction);
+  }
 }
 
 function returnShare(
@@ -138,6 +155,37 @@ async function changeAvailability(allInfos) {
     .catch((error) => {
       console.log(error);
     });
+}
+
+function deleteItem(allInfos) {
+  if (allInfos.id && allInfos.user_id) {
+    const URL =
+      "http://localhost:8081/api/Item//deleteItemById/" +
+      allInfos.id +
+      "/" +
+      allInfos.user_id;
+
+    fetch(URL, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}
+
+function returnEditItem(fullDetails, setEdit, refreshAction) {
+  return (
+    <EditItems
+      infos={fullDetails}
+      setEdit={setEdit}
+      refreshAction={refreshAction}
+    />
+  );
 }
 
 //this function iterpret the data format in one more common and easy to read

@@ -1,0 +1,176 @@
+.card__editItem {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  width: 80vw;
+  height: 75vh;
+
+  background-color: $white;
+
+  position: relative;
+
+  border-radius: $border-radius;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  &__photo {
+    display: flex;
+    flex-direction: column;
+
+    &__image {
+      $size: 350px;
+
+      width: $size;
+      height: $size;
+
+      border-radius: 100%;
+      object-fit: cover;
+    }
+
+    &__link {
+      margin-top: 25px;
+
+      width: 100%;
+
+      padding: 0.5em;
+
+      font-size: 20px;
+
+      background: $main;
+
+      border: none;
+      border-radius: $border-radius;
+
+      outline: none;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  &__content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 45vw;
+
+    &__nameAndDate {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      * {
+        width: 100%;
+
+        padding: 0.5em;
+
+        font-size: 20px;
+
+        margin: 10px;
+
+        background: $main;
+
+        border: none;
+        border-radius: $border-radius;
+
+        outline: none;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    &__categories {
+      display: flex;
+
+      &__category {
+        margin: 10px;
+        padding: 1em;
+
+        background-color: $main;
+
+        border-radius: $border-radius;
+
+        cursor: pointer;
+        &::placeholder {
+          color: $main;
+        }
+
+        &--current {
+          color: $white;
+          background-color: $secondary;
+        }
+      }
+    }
+
+    &__description {
+      resize: none;
+
+      margin-top: 15px;
+
+      width: 95%;
+
+      padding: 0.5em;
+
+      font-size: 20px;
+
+      margin: 10px;
+
+      background: $main;
+
+      border: none;
+      border-radius: $border-radius;
+
+      outline: none;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__quatity {
+      width: 15%;
+
+      padding: 0.5em;
+
+      font-size: 20px;
+
+      margin: 10px;
+
+      background: $main;
+
+      border: none;
+      border-radius: $border-radius;
+
+      outline: none;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .card__actions {
+      display: flex;
+      justify-content: end;
+
+      position: relative;
+
+      .card__actions__pencil {
+        display: flex;
+        align-items: center;
+
+        position: relative;
+        bottom: -5vh;
+
+        padding: 0.5em 1em;
+
+        color: $main;
+        background-color: $secondary;
+
+        border-radius: $border-radius;
+
+        * {
+          margin: 0.25em 0.5em;
+        }
+      }
+    }
+  }
+}
