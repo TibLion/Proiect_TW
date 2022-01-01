@@ -22,7 +22,7 @@ function ReturnFoodMenu(id, isYou, name) {
       <div className="foodMenu">
         <p className="foodMenu__title">{titleDecider(isYou, name)}</p>
         {returnFilters(isYou, refresh, setRefresh, setAdd)}
-        {ReturnItems(id, refresh, setRefresh, item, setItem)}
+        {ReturnItems(id, refresh, setRefresh, item, setItem, isYou)}
       </div>
     );
   else {
@@ -46,23 +46,15 @@ function titleDecider(isYou, name) {
 }
 
 function returnFilters(isYou, value, action, setAdd) {
-  if (isYou)
-    return (
-      <div className="foodMenu__filters">
-        <div className="foodMenu__filters__categories">
-          {returnCategories("All Categories", value, action)}
-        </div>
+  return (
+    <div className="foodMenu__filters">
+      <div className="foodMenu__filters__categories">
+        {returnCategories("All Categories", value, action)}
+      </div>
 
-        <div className="foodMenu__filters__sort">
-          <div
-            className="foodMenu__filters__sort__add "
-            onClick={() => {
-              setAdd(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-          </div>
-          {/* <div className="foodMenu__filters__sort__option">
+      <div className="foodMenu__filters__sort">
+        {addItemDecider(isYou, setAdd)}
+        {/* <div className="foodMenu__filters__sort__option">
             <span className="icon-sort-alpha-asc"></span>
           </div>
           <div className="foodMenu__filters__sort__option">
@@ -75,7 +67,21 @@ function returnFilters(isYou, value, action, setAdd) {
             {" "}
             <span className="icon-sort-numberic-desc"></span>
           </div> */}
-        </div>
+      </div>
+    </div>
+  );
+}
+
+function addItemDecider(isYou, setAdd) {
+  if (isYou)
+    return (
+      <div
+        className="foodMenu__filters__sort__add "
+        onClick={() => {
+          setAdd(true);
+        }}
+      >
+        <span className="icon-plus"></span>
       </div>
     );
 }
@@ -144,24 +150,26 @@ function generateCategories(current) {
 
 //#region getItems
 
-function ReturnItems(id, refresh, setRefresh, item, setItem) {
-  let items = CreateItemsList(id, refresh, setRefresh, item, setItem);
+function ReturnItems(id, refresh, setRefresh, item, setItem, isYou) {
+  let items = CreateItemsList(id, refresh, setRefresh, item, setItem, isYou);
 
   if (items)
     return (
       <div className="foodMenu__items">
-        {returnItemList(items, refresh, setRefresh)}
+        {returnItemList(items, refresh, setRefresh, isYou)}
       </div>
     );
 }
 
-function returnItemList(data, bool, refresh) {
+function returnItemList(data, bool, refresh, isYou) {
   return data
     ?.filter(decideFilter)
     .sort(compareDates)
 
     .map((item) => {
-      return <CardItems item={item} refresh={refresh} val={bool} />;
+      return (
+        <CardItems item={item} refresh={refresh} val={bool} isYou={isYou} />
+      );
     });
 }
 //TODO: Sorter Function
@@ -188,10 +196,14 @@ function decideFilter(element) {
 }
 
 // we get through API the items based on current user
-function CreateItemsList(id, refresh, setRefresh, item, setItem) {
+function CreateItemsList(id, refresh, setRefresh, item, setItem, isYou) {
   let temp = refresh;
+  let URL;
+  if (isYou === true)
+    URL = "http://localhost:8081/api/item/getAllItemsByUserId/" + id;
+  else
+    URL = "http://localhost:8081/api/item/getAllItemsAvailableByUserId/" + id;
 
-  const URL = "http://localhost:8081/api/item/getAllItemsByUserId/" + id;
   if (item == null || temp == true)
     fetch(URL, {
       method: "GET",

@@ -15,7 +15,8 @@ function CardItems(props) {
     props.item.expirationDate,
     props.item.isAvailable,
     props.item,
-    refreshAction
+    refreshAction,
+    props.isYou
   );
 }
 
@@ -27,7 +28,8 @@ function ReturnCarditem(
   expirationDate,
   isAvailable,
   allInfos,
-  refreshAction
+  refreshAction,
+  isYou
 ) {
   const [edit, setEdit] = useState(false);
   if (edit === false) {
@@ -44,33 +46,16 @@ function ReturnCarditem(
         <p className="card__item__expirationDate">
           {generateData(expirationDate)}
         </p>
-        <div className="card__actions">
-          <div
-            className="card__actions__edit"
-            onClick={() => {
-              setEdit(true);
-            }}
-          >
-            <span className="icon-pencil"></span>
-          </div>
-          <div
-            className="card__actions__delete"
-            onClick={() => {
-              deleteItem(allInfos);
-              refreshAction.action(!refreshAction.value);
-            }}
-          >
-            <span className="icon-bin2"></span>
-          </div>
-          {returnShare(
-            name,
-            category,
-            description,
-            isAvailable,
-            allInfos,
-            refreshAction
-          )}
-        </div>
+        {returnOptions(
+          name,
+          category,
+          description,
+          isAvailable,
+          allInfos,
+          refreshAction,
+          isYou,
+          setEdit
+        )}
       </div>
     );
   } else {
@@ -78,6 +63,54 @@ function ReturnCarditem(
   }
 }
 
+function returnOptions(
+  name,
+  category,
+  description,
+  isAvailable,
+  allInfos,
+  refreshAction,
+  isYou,
+  setEdit
+) {
+  console.log(isYou);
+  if (isYou != undefined && isYou === false) {
+    return (
+      <div className="card__actions">
+        <span className="icon-checkmark"></span>
+      </div>
+    );
+  } else
+    return (
+      <div className="card__actions">
+        <div
+          className="card__actions__edit"
+          onClick={() => {
+            setEdit(true);
+          }}
+        >
+          <span className="icon-pencil"></span>
+        </div>
+        <div
+          className="card__actions__delete"
+          onClick={() => {
+            deleteItem(allInfos);
+            refreshAction.action(!refreshAction.value);
+          }}
+        >
+          <span className="icon-bin2"></span>
+        </div>
+        {returnShare(
+          name,
+          category,
+          description,
+          isAvailable,
+          allInfos,
+          refreshAction
+        )}
+      </div>
+    );
+}
 //return the Html content
 function returnShare(
   name,

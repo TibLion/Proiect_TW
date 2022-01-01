@@ -1,7 +1,19 @@
 .foodMenu {
   display: flex;
   flex-direction: column;
-  margin: 0 2.5vw;
+
+  padding: 0 2.5vw;
+
+  width: 94vw;
+  height: 100vh;
+
+  position: absolute;
+  background-color: $main;
+
+  z-index: 2;
+
+  left: 0;
+  top: 10%;
 
   &__title {
     font-size: 30px;

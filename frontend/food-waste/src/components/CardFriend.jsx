@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EditFriend from "./EditFriend";
+import FoodMenu from "./FoodMenu";
 
 function CardFriend(props) {
   return ReturnCardFriend(
@@ -23,13 +24,14 @@ function ReturnCardFriend(
   fullDetails
 ) {
   const [edit, setEdit] = useState(false);
+  const [showList, setShowList] = useState(false);
 
   const refreshFriend = {
     value: val,
     action: refresh,
   };
 
-  if (edit === false)
+  if (edit === false && showList === false)
     return (
       <div className="card">
         <div className="card__friend">
@@ -40,7 +42,12 @@ function ReturnCardFriend(
           </div>
         </div>
         <div className="card__actions">
-          <div className="card__actions__list">
+          <div
+            className="card__actions__list"
+            onClick={() => {
+              setShowList(true);
+            }}
+          >
             <span className="icon-list2"></span>
           </div>
           <div
@@ -63,7 +70,9 @@ function ReturnCardFriend(
         </div>
       </div>
     );
-  else return returnEditFriend(fullDetails, setEdit, refreshFriend);
+  else if (showList === false)
+    return returnEditFriend(fullDetails, setEdit, refreshFriend);
+  else return returnFriendList(fullDetails.receiver_id, name);
 }
 
 function deleteFriend(id) {
@@ -88,6 +97,10 @@ function returnEditFriend(fullDetails, setEdit, refreshFriend) {
   return (
     <EditFriend data={fullDetails} setEdit={setEdit} refresh={refreshFriend} />
   );
+}
+
+function returnFriendList(id, userName) {
+  return <FoodMenu userId={id} userName={userName} isYou={false} />;
 }
 
 export default CardFriend;
