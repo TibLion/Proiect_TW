@@ -16,7 +16,9 @@ function CardItems(props) {
     props.item.isAvailable,
     props.item,
     refreshAction,
-    props.isYou
+    props.isYou,
+    props.relationshipDetails,
+    props.item.id
   );
 }
 
@@ -29,7 +31,9 @@ function ReturnCarditem(
   isAvailable,
   allInfos,
   refreshAction,
-  isYou
+  isYou,
+  relationshipDetails,
+  id
 ) {
   const [edit, setEdit] = useState(false);
   if (edit === false) {
@@ -54,7 +58,9 @@ function ReturnCarditem(
           allInfos,
           refreshAction,
           isYou,
-          setEdit
+          setEdit,
+          relationshipDetails,
+          id
         )}
       </div>
     );
@@ -71,13 +77,21 @@ function returnOptions(
   allInfos,
   refreshAction,
   isYou,
-  setEdit
+  setEdit,
+  relationshipDetails,
+  id
 ) {
-  console.log(isYou);
   if (isYou != undefined && isYou === false) {
     return (
       <div className="card__actions">
-        <span className="icon-checkmark"></span>
+        <div
+          className="card__action__claim"
+          onClick={() => {
+            postItemRequest(relationshipDetails, id);
+          }}
+        >
+          <span className="icon-checkmark"></span>
+        </div>
       </div>
     );
   } else
@@ -111,6 +125,7 @@ function returnOptions(
       </div>
     );
 }
+
 //return the Html content
 function returnShare(
   name,
@@ -223,6 +238,33 @@ function returnEditItem(fullDetails, setEdit, refreshAction) {
       refreshAction={refreshAction}
     />
   );
+}
+
+async function postItemRequest(relationshipDetails, id) {
+  const URL = "http://localhost:8081/api/itemRequest/postItemRequest";
+  const isoDateString = new Date().toISOString();
+  const body = {
+    sender_id: relationshipDetails.sender_id,
+    receiver_id: relationshipDetails.receiver_id,
+    date: isoDateString,
+    item_id: id,
+    status: "PENDING",
+  };
+
+  await fetch(URL, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(body),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 //this function iterpret the data format in one more common and easy to read

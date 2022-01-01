@@ -72,7 +72,7 @@ function ReturnCardFriend(
     );
   else if (showList === false)
     return returnEditFriend(fullDetails, setEdit, refreshFriend);
-  else return returnFriendList(fullDetails.receiver_id, name);
+  else return returnFriendList(fullDetails.receiver_id, name, fullDetails);
 }
 
 function deleteFriend(id) {
@@ -99,8 +99,15 @@ function returnEditFriend(fullDetails, setEdit, refreshFriend) {
   );
 }
 
-function returnFriendList(id, userName) {
-  return <FoodMenu userId={id} userName={userName} isYou={false} />;
+function returnFriendList(id, userName, fullDetails) {
+  return (
+    <FoodMenu
+      userId={id}
+      userName={userName}
+      isYou={false}
+      relationshipDetails={fullDetails}
+    />
+  );
 }
 
 export default CardFriend;

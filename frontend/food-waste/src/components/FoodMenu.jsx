@@ -4,10 +4,15 @@ import CardItems from "./CardItems";
 import EditItems from "./EditItems";
 
 function FoodMenu(props) {
-  return ReturnFoodMenu(props.userId, props.isYou, props.userName);
+  return ReturnFoodMenu(
+    props.userId,
+    props.isYou,
+    props.userName,
+    props.relationshipDetails
+  );
 }
 
-function ReturnFoodMenu(id, isYou, name) {
+function ReturnFoodMenu(id, isYou, name, relationshipDetails) {
   const [refresh, setRefresh] = useState(false);
   const [add, setAdd] = useState(false);
   let [item, setItem] = useState(null);
@@ -22,7 +27,15 @@ function ReturnFoodMenu(id, isYou, name) {
       <div className="foodMenu">
         <p className="foodMenu__title">{titleDecider(isYou, name)}</p>
         {returnFilters(isYou, refresh, setRefresh, setAdd)}
-        {ReturnItems(id, refresh, setRefresh, item, setItem, isYou)}
+        {ReturnItems(
+          id,
+          refresh,
+          setRefresh,
+          item,
+          setItem,
+          isYou,
+          relationshipDetails
+        )}
       </div>
     );
   else {
@@ -150,25 +163,39 @@ function generateCategories(current) {
 
 //#region getItems
 
-function ReturnItems(id, refresh, setRefresh, item, setItem, isYou) {
+function ReturnItems(
+  id,
+  refresh,
+  setRefresh,
+  item,
+  setItem,
+  isYou,
+  relationshipDetails
+) {
   let items = CreateItemsList(id, refresh, setRefresh, item, setItem, isYou);
 
   if (items)
     return (
       <div className="foodMenu__items">
-        {returnItemList(items, refresh, setRefresh, isYou)}
+        {returnItemList(items, refresh, setRefresh, isYou, relationshipDetails)}
       </div>
     );
 }
 
-function returnItemList(data, bool, refresh, isYou) {
+function returnItemList(data, bool, refresh, isYou, relationshipDetails) {
   return data
     ?.filter(decideFilter)
     .sort(compareDates)
 
     .map((item) => {
       return (
-        <CardItems item={item} refresh={refresh} val={bool} isYou={isYou} />
+        <CardItems
+          item={item}
+          refresh={refresh}
+          val={bool}
+          isYou={isYou}
+          relationshipDetails={relationshipDetails}
+        />
       );
     });
 }
