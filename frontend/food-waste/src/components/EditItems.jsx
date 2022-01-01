@@ -1,92 +1,182 @@
 import React from "react";
 
 function EditItems(props) {
-  return returnEditItem(props.infos, props.setEdit, props.refreshAction);
+  return returnEditItem(
+    props.infos,
+    props.setEdit,
+    props.refreshAction,
+    props.userId
+  );
 }
 
 //return the Html content
-function returnEditItem(info, close, refresh) {
-  return (
-    <div className="card__edit">
-      <div className="card__editItem">
-        <div className="card__editItem__photo">
-          <img src={info.photo} className="card__editItem__photo__image" />
-          <input
-            type="text"
-            className="card__editItem__photo__link"
-            defaultValue={info.photo}
-            id="EditItemPhoto"
-            placeholder="Link to the Item Image"
-          />
-        </div>
-        <div className="card__editItem__content">
-          <div className="card__editItem__content__nameAndDate">
+function returnEditItem(info, close, refresh, id) {
+  console.log(id);
+  //if info exist, then i edit an item
+  if (info)
+    return (
+      <div className="card__edit">
+        <div className="card__editItem">
+          <div className="card__editItem__photo">
+            <img src={info.photo} className="card__editItem__photo__image" />
             <input
               type="text"
-              className="card__editItem__content__nameAndDate__name"
-              defaultValue={info.name}
-              placeholder="Name of the item"
-              id="EditItemName"
-            />
-            <input
-              type="date"
-              className="card__editItem__content__nameAndDate__date"
-              defaultValue={generateData(info.expirationDate)}
-              placeholder="Date of Expiration"
-              id="EditItemDate"
+              className="card__editItem__photo__link"
+              defaultValue={info.photo}
+              id="EditItemPhoto"
+              placeholder="Link to the Item Image"
             />
           </div>
-          <div className="card__editItem__content__categories">
-            {returnCategories(info.category)}
-            <input
-              type="text"
-              name="newCategory"
-              id="newCategory"
-              placeholder="Click to write custom category"
-              className="card__editItem__content__categories__category displayNone"
-            />
-            <p
-              className="card__editItem__content__categories__category "
-              id="addNewCategory"
-              onClick={(e) => {
-                selectCategory(e);
-                displayNewCategory(e);
-              }}
-            >
-              Add new category +
-            </p>
-          </div>
-          <textarea
-            cols="30"
-            rows="10"
-            maxLength="255"
-            className="card__editItem__content__description"
-            defaultValue={info.description}
-            placeholder="Descripiton of the item"
-            id="EditItemDescription"
-          ></textarea>
-          <input
-            type="text"
-            className="card__editItem__content__quatity"
-            defaultValue={info.quantity}
-            placeholder="Quantity of the product"
-            id="EditItemQuantity"
-          />
-          <div className="card__actions">
-            <div
-              className="card__actions__pencil "
-              onClick={(e) => {
-                sendTheData(info, close, refresh);
-              }}
-            >
-              <p className="card__actions__pencil__name">Save Changes</p>
-              <span className="icon-pencil"></span>
+          <div className="card__editItem__content">
+            <div className="card__editItem__content__nameAndDate">
+              <input
+                type="text"
+                className="card__editItem__content__nameAndDate__name"
+                defaultValue={info.name}
+                placeholder="Name of the item"
+                id="EditItemName"
+              />
+              <input
+                type="date"
+                className="card__editItem__content__nameAndDate__date"
+                defaultValue={generateData(info.expirationDate)}
+                placeholder="Date of Expiration"
+                id="EditItemDate"
+              />
             </div>
-          </div>{" "}
+            <div className="card__editItem__content__categories">
+              {returnCategories(info.category)}
+              <input
+                type="text"
+                name="newCategory"
+                id="newCategory"
+                placeholder="Click to write custom category"
+                className="card__editItem__content__categories__category displayNone"
+              />
+              <p
+                className="card__editItem__content__categories__category "
+                id="addNewCategory"
+                onClick={(e) => {
+                  selectCategory(e);
+                  displayNewCategory(e);
+                }}
+              >
+                Add new category +
+              </p>
+            </div>
+            <textarea
+              cols="30"
+              rows="10"
+              maxLength="255"
+              className="card__editItem__content__description"
+              defaultValue={info.description}
+              placeholder="Descripiton of the item"
+              id="EditItemDescription"
+            ></textarea>
+            <input
+              type="text"
+              className="card__editItem__content__quatity"
+              defaultValue={info.quantity}
+              placeholder="Quantity of the product"
+              id="EditItemQuantity"
+            />
+            <div className="card__actions">
+              <div
+                className="card__actions__pencil "
+                onClick={(e) => {
+                  sendTheData(info, close, refresh);
+                }}
+              >
+                <p className="card__actions__pencil__name">Save Changes</p>
+                <span className="icon-pencil"></span>
+              </div>
+            </div>{" "}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  // else that means I create an item
+  else {
+    return (
+      <div className="card__edit">
+        <div className="card__editItem">
+          <div className="card__editItem__photo">
+            <img
+              src="https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+              className="card__editItem__photo__image"
+            />
+            <input
+              type="text"
+              className="card__editItem__photo__link"
+              id="SaveItemPhoto"
+              placeholder="Link to the Item Image"
+            />
+          </div>
+          <div className="card__editItem__content">
+            <div className="card__editItem__content__nameAndDate">
+              <input
+                type="text"
+                className="card__editItem__content__nameAndDate__name"
+                placeholder="Name of the item"
+                id="SaveItemName"
+              />
+              <input
+                type="date"
+                className="card__editItem__content__nameAndDate__date"
+                placeholder="Date of Expiration"
+                id="SaveItemDate"
+              />
+            </div>
+            <div className="card__editItem__content__categories">
+              {returnCategories("Unset")}
+              <input
+                type="text"
+                name="newCategory"
+                id="newCategory"
+                placeholder="Click to write custom category"
+                className="card__editItem__content__categories__category displayNone"
+              />
+              <p
+                className="card__editItem__content__categories__category "
+                id="addNewCategory"
+                onClick={(e) => {
+                  selectCategory(e);
+                  displayNewCategory(e);
+                }}
+              >
+                Add new category +
+              </p>
+            </div>
+            <textarea
+              cols="30"
+              rows="10"
+              maxLength="255"
+              className="card__editItem__content__description"
+              placeholder="Descripiton of the item"
+              id="SaveItemDescription"
+            ></textarea>
+            <input
+              type="text"
+              className="card__editItem__content__quatity"
+              placeholder="Quantity of the product"
+              id="SaveItemQuantity"
+            />
+            <div className="card__actions">
+              <div
+                className="card__actions__pencil "
+                onClick={(e) => {
+                  postTheData(id, close, refresh);
+                }}
+              >
+                <p className="card__actions__pencil__name">Save Changes</p>
+                <span className="icon-pencil"></span>
+              </div>
+            </div>{" "}
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 //#region functions for the  Categories
@@ -231,6 +321,48 @@ async function sendTheData(data, setEdit, refresh) {
       "Content-Type": "application/json",
     },
     method: "PUT",
+    body: JSON.stringify(body),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+      setEdit(false);
+      refresh.action(!refresh.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+async function postTheData(id, setEdit, refresh) {
+  const category = document.getElementsByClassName(
+    "card__editItem__content__categories__category--current"
+  );
+
+  const categoryElement =
+    category[0].innerHTML.length < 1
+      ? category[0].value
+      : category[0].innerHTML;
+
+  const URL = "http://localhost:8081/api/item/postItem";
+
+  const body = {
+    user_id: id,
+    name: document.getElementById("SaveItemName").value,
+    description: document.getElementById("SaveItemDescription").value,
+    quantity: document.getElementById("SaveItemQuantity").value,
+    category: categoryElement,
+    expirationDate: document.getElementById("SaveItemDate").value,
+    isAvailable: 0,
+    photo: document.getElementById("SaveItemPhoto").value,
+  };
+  console.log(body);
+
+  await fetch(URL, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
     body: JSON.stringify(body),
   })
     .then((res) => res.json())

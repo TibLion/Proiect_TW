@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import CardItems from "./CardItems";
+import EditItems from "./EditItems";
 
 function FoodMenu(props) {
   return ReturnFoodMenu(props.userId, props.isYou, props.userName);
@@ -8,12 +9,30 @@ function FoodMenu(props) {
 
 function ReturnFoodMenu(id, isYou, name) {
   const [refresh, setRefresh] = useState(false);
+  const [add, setAdd] = useState(false);
+  let [item, setItem] = useState(null);
+
+  const refreshAction = {
+    value: refresh,
+    action: setRefresh,
+  };
+
+  if (add === false)
+    return (
+      <div className="foodMenu">
+        <p className="foodMenu__title">{titleDecider(isYou, name)}</p>
+        {returnFilters(isYou, refresh, setRefresh, setAdd)}
+        {ReturnItems(id, refresh, setRefresh, item, setItem)}
+      </div>
+    );
+  else {
+    return returnAddItems(setAdd, refreshAction, id);
+  }
+}
+
+function returnAddItems(setAdd, refreshAction, id) {
   return (
-    <div className="foodMenu">
-      <p className="foodMenu__title">{titleDecider(isYou, name)}</p>
-      {returnFilters(isYou, refresh, setRefresh)}
-      {ReturnItems(id, refresh, setRefresh)}
-    </div>
+    <EditItems setEdit={setAdd} refreshAction={refreshAction} userId={id} />
   );
 }
 
@@ -26,7 +45,7 @@ function titleDecider(isYou, name) {
   }
 }
 
-function returnFilters(isYou, value, action) {
+function returnFilters(isYou, value, action, setAdd) {
   if (isYou)
     return (
       <div className="foodMenu__filters">
@@ -35,9 +54,27 @@ function returnFilters(isYou, value, action) {
         </div>
 
         <div className="foodMenu__filters__sort">
-          <div className="foodMenu__filters__add">
+          <div
+            className="foodMenu__filters__sort__add "
+            onClick={() => {
+              setAdd(true);
+            }}
+          >
             <span className="icon-plus"></span>
           </div>
+          {/* <div className="foodMenu__filters__sort__option">
+            <span className="icon-sort-alpha-asc"></span>
+          </div>
+          <div className="foodMenu__filters__sort__option">
+            <span className="icon-sort-alpha-desc"></span>
+          </div>
+          <div className="foodMenu__filters__sort__option">
+            <span className="icon-sort-numeric-asc"></span>
+          </div>
+          <div className="foodMenu__filters__sort__option">
+            {" "}
+            <span className="icon-sort-numberic-desc"></span>
+          </div> */}
         </div>
       </div>
     );
@@ -107,8 +144,8 @@ function generateCategories(current) {
 
 //#region getItems
 
-function ReturnItems(id, refresh, setRefresh) {
-  let items = CreateItemsList(id, refresh, setRefresh);
+function ReturnItems(id, refresh, setRefresh, item, setItem) {
+  let items = CreateItemsList(id, refresh, setRefresh, item, setItem);
 
   if (items)
     return (
@@ -127,6 +164,8 @@ function returnItemList(data, bool, refresh) {
       return <CardItems item={item} refresh={refresh} val={bool} />;
     });
 }
+//TODO: Sorter Function
+// function sorterDecider(frist, second) {}
 
 function compareDates(first, second) {
   const firstDate = new Date(first.expirationDate);
@@ -136,19 +175,21 @@ function compareDates(first, second) {
 }
 
 function decideFilter(element) {
-  const category = document.getElementsByClassName(
+  let category = document.getElementsByClassName(
     "foodMenu__filters__categories__category--current"
-  )[0].innerHTML;
+  )[0];
 
-  if (category == "All Categories") {
-    return true;
-  } else return element.category == category ? true : false;
+  if (category) {
+    category = category.innerHTML;
+    if (category == "All Categories") {
+      return true;
+    } else return element.category == category ? true : false;
+  }
 }
 
 // we get through API the items based on current user
-function CreateItemsList(id, refresh, setRefresh) {
+function CreateItemsList(id, refresh, setRefresh, item, setItem) {
   let temp = refresh;
-  let [item, setItem] = useState(null);
 
   const URL = "http://localhost:8081/api/item/getAllItemsByUserId/" + id;
   if (item == null || temp == true)
