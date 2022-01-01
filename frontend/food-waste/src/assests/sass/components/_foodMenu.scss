@@ -1,0 +1,56 @@
+.foodMenu {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2.5vw;
+
+  &__title {
+    font-size: 30px;
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__categories {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      &__category {
+        margin: 10px;
+        padding: 1em;
+
+        background-color: $main;
+
+        border-radius: $border-radius;
+
+        cursor: pointer;
+        &::placeholder {
+          color: $main;
+        }
+
+        &--current {
+          color: $white;
+          background-color: $secondary;
+        }
+      }
+    }
+
+    &__add {
+      font-size: 25px;
+    }
+  }
+
+  &__items {
+    display: flex;
+
+    align-items: center;
+    flex-wrap: wrap;
+
+    .card {
+      width: 30%;
+      margin: 0.5% 1.5%;
+    }
+  }
+}
