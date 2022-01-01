@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import FoodMenu from "./FoodMenu";
 import LoginCycle from "./LoginCycle";
 import MainPage from "./MainPage";
 
@@ -50,7 +51,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Your Items Page
+        <FoodMenu userId={user.id} userName={user.name} isYou={true} />
       </div>
     );
   else if (pageToShow === "friends")

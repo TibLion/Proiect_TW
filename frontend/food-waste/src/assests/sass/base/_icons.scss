@@ -9,7 +9,6 @@
   font-style: normal;
   font-display: block;
 }
-
 [class^="icon-"],
 [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
@@ -82,4 +81,7 @@
 }
 .icon-share2:before {
   content: "\ea82";
+}
+.icon-facebook:before {
+  content: "\ea90";
 }

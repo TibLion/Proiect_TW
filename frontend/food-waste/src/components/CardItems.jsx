@@ -107,7 +107,7 @@ function returnShare(
           description={description}
           className="card__actions__socialMedia"
         >
-          <span className="icon-share2"></span>
+          <span className="icon-facebook"></span>
         </FacebookShareButton>
       </div>
     );
