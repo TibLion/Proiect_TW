@@ -1,5 +1,22 @@
 const itemRequestDB = require("../models").ItemRequest;
 
+function isIdUnique(item_id, sender_id, receiver_id) {
+  return itemRequestDB
+    .count({
+      where: {
+        item_id: item_id,
+        sender_id: sender_id,
+        receiver_id: receiver_id,
+      },
+    })
+    .then((count) => {
+      if (count != 0) {
+        return false;
+      }
+      return true;
+    });
+}
+
 const controller = {
   getAllBySenderId: async (req, res) => {
     const { userId } = req.params;
@@ -40,22 +57,29 @@ const controller = {
       });
   },
   postItemRequest: async (req, res) => {
-    itemRequestDB
-      .create({
-        sender_id: req.body.sender_id,
-        receiver_id: req.body.receiver_id,
-        item_id: req.body.item_id,
+    if (
+      await isIdUnique(
+        req.body.item_id,
+        req.body.sender_id,
+        req.body.receiver_id
+      )
+    )
+      itemRequestDB
+        .create({
+          sender_id: req.body.sender_id,
+          receiver_id: req.body.receiver_id,
+          item_id: req.body.item_id,
 
-        date: req.body.date,
-        status: req.body.status,
-      })
-      .then((item) => {
-        res.status(200).send(item);
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).send({ message: "Server error" });
-      });
+          date: req.body.date,
+          status: req.body.status,
+        })
+        .then((item) => {
+          res.status(200).send(item);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(500).send({ message: "Server error" });
+        });
   },
 };
 module.exports = controller;
