@@ -46,8 +46,16 @@ FriendshipRequest.belongsTo(User, {
 Item.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
 
 // Item Request
-ItemRequest.belongsTo(User, { foreignKey: "sender_id", targetKey: "id" });
-ItemRequest.belongsTo(User, { foreignKey: "receiver_id", targetKey: "id" });
+ItemRequest.belongsTo(User, {
+  foreignKey: "sender_id",
+  targetKey: "id",
+  as: "SenderId",
+});
+ItemRequest.belongsTo(User, {
+  foreignKey: "receiver_id",
+  targetKey: "id",
+  as: "ReceiverId",
+});
 ItemRequest.belongsTo(Item, { foreignKey: "item_id", targetKey: "id" });
 
 //export

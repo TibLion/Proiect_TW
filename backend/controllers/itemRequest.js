@@ -1,4 +1,6 @@
 const itemRequestDB = require("../models").ItemRequest;
+const UsersDB = require("./../models").User;
+const ItemDB = require("./../models").Item;
 
 function isIdUnique(item_id, sender_id, receiver_id) {
   return itemRequestDB
@@ -28,6 +30,15 @@ const controller = {
         where: {
           sender_id: userId,
         },
+        include: [
+          {
+            model: UsersDB,
+            as: "SenderId",
+          },
+          {
+            model: ItemDB,
+          },
+        ],
       })
       .then((itemReq) => {
         res.status(200).send(itemReq);
@@ -47,6 +58,15 @@ const controller = {
         where: {
           receiver_id: userId,
         },
+        include: [
+          {
+            model: UsersDB,
+            as: "ReceiverId",
+          },
+          {
+            model: ItemDB,
+          },
+        ],
       })
       .then((itemReq) => {
         res.status(200).send(itemReq);
