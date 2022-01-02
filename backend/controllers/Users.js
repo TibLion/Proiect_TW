@@ -47,7 +47,7 @@ const controller = {
       },
     })
       .then((user) => {
-        res.status(200).send({ user });
+        res.status(200).send(user);
       })
       .catch((error) => {
         console.log(error);

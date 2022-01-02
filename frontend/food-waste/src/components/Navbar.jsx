@@ -82,7 +82,6 @@ function returnNavbar(
                   <div
                     className="button button--active"
                     onClick={(e) => {
-                      SearchForItemsByName(e);
                       pageSelector.nextPage("browseItem");
                     }}
                   >
