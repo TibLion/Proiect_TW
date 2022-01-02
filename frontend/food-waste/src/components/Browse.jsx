@@ -36,7 +36,12 @@ function ReturnPageDecider(type, id) {
       return returnBrowseYourItems(data, setLast);
 
     case "ypeople":
-      return returnBrowseYourPeople();
+      if (last != "ypeople") {
+        setData(null);
+        setLast("ypeople");
+      }
+      SearchForYourUsersByName(data, setData, id);
+      return returnBrowseYourPeople(data, setLast);
   }
 }
 
@@ -174,7 +179,58 @@ function SearchForYourItemsByName(data, setData, id) {
 
 //#endregion
 
-function returnBrowseYourPeople() {
-  return <div>People</div>;
+//#region Browse People
+function returnBrowseYourPeople(data, setLast) {
+  return (
+    <div className="friendMenu">
+      <p className="friendMenu__title">Your search results: </p>
+      <div className="friendMenu__friends">
+        {" "}
+        {dataYourFriend(data, setLast)}
+      </div>
+    </div>
+  );
 }
+
+function dataYourFriend(data, setLast) {
+  console.log(data);
+  return data?.map((friend) => {
+    if (friend.User)
+      return (
+        <CardFriend
+          fullDetails={friend}
+          photo={friend.User.photo}
+          name={friend.User.name}
+          category={friend.category}
+          refresh={setLast}
+        />
+      );
+  });
+}
+
+function SearchForYourUsersByName(data, setData, id) {
+  const name = searchedInput(setData);
+
+  const URL =
+    "http://localhost:8081/api/friendshipRelation/getFriendshipRel/" +
+    id +
+    "/" +
+    name;
+
+  if (data == null)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setData(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+
+//#endregion
+
 export default Browse;
