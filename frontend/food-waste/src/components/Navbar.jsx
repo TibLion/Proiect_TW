@@ -80,25 +80,27 @@ function returnNavbar(
                 <span className="searchBar__icon icon-search"></span>
                 <div className="input__options">
                   <div
-                    className="button button--active"
+                    className="button button--active input__option "
                     onClick={(e) => {
+                      selectThisItem(e);
                       pageSelector.nextPage("browseItem");
                     }}
                   >
                     Browse Items
                   </div>
                   <div
-                    className="button"
+                    className="button input__option"
                     onClick={(e) => {
-                      SearchForUsersByName(e);
+                      selectThisItem(e);
                       pageSelector.nextPage("browsePeople");
                     }}
                   >
                     Browse People
                   </div>
                   <div
-                    className="button"
+                    className="button input__option"
                     onClick={(e) => {
+                      selectThisItem(e);
                       SearchForItemsByNameAndId(e, id);
                       pageSelector.nextPage("browseInYourFood");
                     }}
@@ -106,7 +108,7 @@ function returnNavbar(
                     Browse in your Food
                   </div>
                   <div
-                    className="button"
+                    className="button input__option"
                     onClick={(e) => {
                       SearchForFriendByNameAndId(e, id);
                       pageSelector.nextPage("browseInYourFriends");

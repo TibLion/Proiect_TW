@@ -269,6 +269,7 @@ async function postItemRequest(relationshipDetails, id) {
 
 //this function iterpret the data format in one more common and easy to read
 function generateData(data) {
-  return data.slice(8, 10) + "." + data.slice(5, 7) + "." + data.slice(0, 4);
+  if (data)
+    return data.slice(8, 10) + "." + data.slice(5, 7) + "." + data.slice(0, 4);
 }
 export default CardItems;
