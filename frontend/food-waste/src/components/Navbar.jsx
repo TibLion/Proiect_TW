@@ -83,6 +83,7 @@ function returnNavbar(
                     className="button button--active"
                     onClick={(e) => {
                       SearchForItemsByName(e);
+                      pageSelector.nextPage("browseItem");
                     }}
                   >
                     Browse Items
@@ -91,6 +92,7 @@ function returnNavbar(
                     className="button"
                     onClick={(e) => {
                       SearchForUsersByName(e);
+                      pageSelector.nextPage("browsePeople");
                     }}
                   >
                     Browse People
@@ -99,6 +101,7 @@ function returnNavbar(
                     className="button"
                     onClick={(e) => {
                       SearchForItemsByNameAndId(e, id);
+                      pageSelector.nextPage("browseInYourFood");
                     }}
                   >
                     Browse in your Food
@@ -107,6 +110,7 @@ function returnNavbar(
                     className="button"
                     onClick={(e) => {
                       SearchForFriendByNameAndId(e, id);
+                      pageSelector.nextPage("browseInYourFriends");
                     }}
                   >
                     Browse in your Friends

@@ -68,7 +68,97 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
         <FriendsMenu userId={user.id} />
       </div>
     );
-
+  else if (pageToShow === "browseItem")
+    return (
+      <div className="">
+        {" "}
+        <Navbar
+          info={infoForNavbar}
+          showMenu={setPageToShow}
+          currentPage={pageToShow}
+          setPage={setPageToShow}
+        />
+        Browse Item
+      </div>
+    );
+  else if (pageToShow === "browsePeople")
+    return (
+      <div className="">
+        {" "}
+        <Navbar
+          info={infoForNavbar}
+          showMenu={setPageToShow}
+          currentPage={pageToShow}
+          setPage={setPageToShow}
+        />
+        Browse People
+      </div>
+    );
+  else if (pageToShow === "browseInYourFood")
+    return (
+      <div className="">
+        {" "}
+        <Navbar
+          info={infoForNavbar}
+          showMenu={setPageToShow}
+          currentPage={pageToShow}
+          setPage={setPageToShow}
+        />
+        Browse in your food
+      </div>
+    );
+  else if (pageToShow === "browseInYourFriends")
+    return (
+      <div className="">
+        {" "}
+        <Navbar
+          info={infoForNavbar}
+          showMenu={setPageToShow}
+          currentPage={pageToShow}
+          setPage={setPageToShow}
+        />
+        Browse in your Friends
+      </div>
+    );
+  else if (pageToShow === "notifFrReq")
+    return (
+      <div className="">
+        {" "}
+        <Navbar
+          info={infoForNavbar}
+          showMenu={setPageToShow}
+          currentPage={pageToShow}
+          setPage={setPageToShow}
+        />
+        Notification Friend request
+      </div>
+    );
+  else if (pageToShow === "notifExpirationReq")
+    return (
+      <div className="">
+        {" "}
+        <Navbar
+          info={infoForNavbar}
+          showMenu={setPageToShow}
+          currentPage={pageToShow}
+          setPage={setPageToShow}
+        />
+        Notification Expiration Request
+      </div>
+    );
+  else if (pageToShow === "notifFoodRequest")
+    return (
+      <div className="">
+        {" "}
+        <Navbar
+          info={infoForNavbar}
+          showMenu={setPageToShow}
+          currentPage={pageToShow}
+          setPage={setPageToShow}
+        />
+        Notification Food Request
+      </div>
+    );
   return (
     <div className="App">
       <Navbar
