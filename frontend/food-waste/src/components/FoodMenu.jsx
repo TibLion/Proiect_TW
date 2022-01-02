@@ -8,11 +8,12 @@ function FoodMenu(props) {
     props.userId,
     props.isYou,
     props.userName,
-    props.relationshipDetails
+    props.relationshipDetails,
+    props.close
   );
 }
 
-function ReturnFoodMenu(id, isYou, name, relationshipDetails) {
+function ReturnFoodMenu(id, isYou, name, relationshipDetails, close) {
   const [refresh, setRefresh] = useState(false);
   const [add, setAdd] = useState(false);
   let [item, setItem] = useState(null);
@@ -26,7 +27,7 @@ function ReturnFoodMenu(id, isYou, name, relationshipDetails) {
     return (
       <div className="foodMenu">
         <p className="foodMenu__title">{titleDecider(isYou, name)}</p>
-        {returnFilters(isYou, refresh, setRefresh, setAdd)}
+        {returnFilters(isYou, refresh, setRefresh, setAdd, close)}
         {ReturnItems(
           id,
           refresh,
@@ -58,7 +59,7 @@ function titleDecider(isYou, name) {
   }
 }
 
-function returnFilters(isYou, value, action, setAdd) {
+function returnFilters(isYou, value, action, setAdd, close) {
   return (
     <div className="foodMenu__filters">
       <div className="foodMenu__filters__categories">
@@ -66,7 +67,7 @@ function returnFilters(isYou, value, action, setAdd) {
       </div>
 
       <div className="foodMenu__filters__sort">
-        {addItemDecider(isYou, setAdd)}
+        {addItemDecider(isYou, setAdd, close)}
         {/* <div className="foodMenu__filters__sort__option">
             <span className="icon-sort-alpha-asc"></span>
           </div>
@@ -85,7 +86,7 @@ function returnFilters(isYou, value, action, setAdd) {
   );
 }
 
-function addItemDecider(isYou, setAdd) {
+function addItemDecider(isYou, setAdd, close) {
   if (isYou)
     return (
       <div
@@ -95,6 +96,17 @@ function addItemDecider(isYou, setAdd) {
         }}
       >
         <span className="icon-plus"></span>
+      </div>
+    );
+  else
+    return (
+      <div
+        className="foodMenu__filters__sort__add "
+        onClick={() => {
+          close(false);
+        }}
+      >
+        <span className="icon-cross"></span>
       </div>
     );
 }

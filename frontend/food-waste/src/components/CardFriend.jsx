@@ -72,7 +72,13 @@ function ReturnCardFriend(
     );
   else if (showList === false)
     return returnEditFriend(fullDetails, setEdit, refreshFriend);
-  else return returnFriendList(fullDetails.receiver_id, name, fullDetails);
+  else
+    return returnFriendList(
+      fullDetails.receiver_id,
+      name,
+      fullDetails,
+      setShowList
+    );
 }
 
 function deleteFriend(id) {
@@ -99,13 +105,14 @@ function returnEditFriend(fullDetails, setEdit, refreshFriend) {
   );
 }
 
-function returnFriendList(id, userName, fullDetails) {
+function returnFriendList(id, userName, fullDetails, setShowList) {
   return (
     <FoodMenu
       userId={id}
       userName={userName}
       isYou={false}
       relationshipDetails={fullDetails}
+      close={setShowList}
     />
   );
 }
