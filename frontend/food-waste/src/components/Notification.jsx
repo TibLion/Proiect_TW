@@ -20,12 +20,23 @@ function ReturnNotification(type, id) {
       GetFriendsRequests(notif, setNotif, id);
       return returnFriendRequest(notif, id, setNotif);
     case "expiration":
-      return <div className=""> expiration</div>;
+      if (last != "expiration") {
+        setNotif(null);
+        setLast("expiration");
+      }
+      GetItemsThatExpire(notif, setNotif, id);
+      return returnExpirationRequest(notif, id, setNotif);
 
     case "food":
+      if (last != "food") {
+        setNotif(null);
+        setLast("food");
+      }
       return <div className=""> food</div>;
   }
 }
+
+//#region Friend Request
 
 function returnFriendRequest(notif, id, setNotif) {
   return (
@@ -74,6 +85,76 @@ function GetFriendsRequests(notif, setNotif, id) {
       .catch((error) => {
         console.log(error);
       });
+}
+
+//#endregion
+
+//#region Expiration Items
+function returnExpirationRequest(notif, id, setNotif) {
+  return (
+    <div className="friendMenu">
+      <p className="friendMenu__title">
+        Things the expiration date is approaching:{" "}
+      </p>
+      <div className="friendMenu__friends">
+        {" "}
+        {expirationItems(notif, id, setNotif)}
+      </div>
+    </div>
+  );
+}
+
+function expirationItems(notif) {
+  return notif
+    ?.filter((elem) => {
+      const elementDate = new Date(elem.expirationDate);
+
+      if (elementDate < nextweek()) return elem;
+    })
+    .sort(compareDates)
+    .map((item) => {
+      return <CardItems item={item} />;
+    });
+}
+function compareDates(first, second) {
+  const firstDate = new Date(first.expirationDate);
+  const secondDate = new Date(second.expirationDate);
+
+  return firstDate > secondDate ? 1 : -1;
+}
+function GetItemsThatExpire(notif, setNotif, id) {
+  const URL = "http://localhost:8081/api/item/getAllItemsByUserId/" + id;
+
+  if (notif == null)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setNotif(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  //   if (notif != null) {
+  //     return notif.filter((elem) => {
+  //       const elementDate = new Date(elem.expirationDate);
+
+  //       if (elementDate < nextweek()) return elem;
+  //     });
+  //   }
+}
+
+function nextweek() {
+  var today = new Date();
+  var nextweek = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 7
+  );
+  return nextweek;
 }
 
 export default Notification;
