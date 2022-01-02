@@ -1,4 +1,6 @@
 const FriendshipRequestDB = require("./../models").FriendshipRequest;
+const UsersDB = require("./../models").User;
+const Sequelize = require("sequelize");
 
 function isIdUnique(sender_id, receiver_id) {
   return FriendshipRequestDB.count({
@@ -17,6 +19,7 @@ function isIdUnique(sender_id, receiver_id) {
 const controller = {
   getAllReceivedFriendRequests: async (req, res) => {
     const { userId } = req.params;
+
     if (userId < 0) {
       res.status(400).send({ message: "User doesn't exist" });
     }
@@ -24,6 +27,12 @@ const controller = {
       where: {
         receiver_id: userId,
       },
+      include: [
+        {
+          model: UsersDB,
+          as: "SenderId",
+        },
+      ],
     })
       .then((frReq) => {
         res.status(200).send(frReq);

@@ -33,10 +33,12 @@ FriendshipRelationship.belongsTo(User, {
 FriendshipRequest.belongsTo(User, {
   foreignKey: "sender_id",
   targetKey: "id",
+  as: "SenderId",
 });
 FriendshipRequest.belongsTo(User, {
   foreignKey: "receiver_id",
   targetKey: "id",
+  as: "ReceiverId",
 });
 
 //Item

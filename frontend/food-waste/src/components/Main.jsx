@@ -7,6 +7,7 @@ import LoginCycle from "./LoginCycle";
 import MainPage from "./MainPage";
 
 import Navbar from "./Navbar";
+import Notification from "./Notification";
 
 function Main() {
   const [user, setUser] = useState(null);
@@ -121,7 +122,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
         <Browse type={"ypeople"} currentUser={user.id} />
       </div>
     );
-  else if (pageToShow === "icon-users")
+  else if (pageToShow === "icon-users") {
     return (
       <div className="">
         {" "}
@@ -131,10 +132,10 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Notification Friend request
+        <Notification type={"friend"} currentUser={user.id} />
       </div>
     );
-  else if (pageToShow === "icon-calendar")
+  } else if (pageToShow === "icon-calendar")
     return (
       <div className="">
         {" "}
@@ -144,7 +145,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Notification Expiration Request
+        <Notification type={"expiration"} currentUser={user.id} />
       </div>
     );
   else if (pageToShow === "icon-spoon-knife")
@@ -157,7 +158,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Notification Food Request
+        <Notification type={"food"} currentUser={user.id} />
       </div>
     );
   return (

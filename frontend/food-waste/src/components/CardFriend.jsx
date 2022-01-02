@@ -12,7 +12,9 @@ function CardFriend(props) {
     props.val,
     props.fullDetails,
     props.isFriend,
-    props.currentUser
+    props.currentUser,
+    props.isRequest,
+    props.reqId
   );
 }
 
@@ -25,11 +27,13 @@ function ReturnCardFriend(
   val,
   fullDetails,
   isFriend,
-  currentUser
+  currentUser,
+  isRequest,
+  reqId
 ) {
   const [edit, setEdit] = useState(false);
   const [showList, setShowList] = useState(false);
-
+  console.log(fullDetails);
   const refreshFriend = {
     value: val,
     action: refresh,
@@ -53,19 +57,20 @@ function ReturnCardFriend(
           refresh,
           id,
           val,
-          currentUser
+          currentUser,
+          isRequest,
+          reqId
         )}
       </div>
     );
   else if (showList === false)
     return returnEditFriend(fullDetails, setEdit, refreshFriend);
-  else
-    return returnFriendList(
-      fullDetails.receiver_id,
-      name,
-      fullDetails,
-      setShowList
-    );
+  else {
+    let tempId = fullDetails.receiver_id;
+
+    if (isRequest == true || isFriend == false) tempId = fullDetails.id;
+    return returnFriendList(tempId, name, fullDetails, setShowList);
+  }
 }
 
 function returnActions(
@@ -76,9 +81,12 @@ function returnActions(
   refresh,
   id,
   val,
-  currentUser
+  currentUser,
+  isRequest,
+  reqId
 ) {
-  if (isFriend != false)
+  console.log(reqId);
+  if (isFriend != false && isRequest != true)
     return (
       <div className="card__actions">
         <div
@@ -108,17 +116,45 @@ function returnActions(
         </div>
       </div>
     );
+  else if (isRequest != true)
+    return (
+      <div className="card__actions">
+        <div
+          className="card__actions__list"
+          onClick={() => {
+            setShowList(true);
+          }}
+        >
+          <span className="icon-list2"></span>
+        </div>
+        <div
+          className="card__actions__add"
+          onClick={() => {
+            acceptFriend(id, currentUser, reqId);
+          }}
+        >
+          <span className="icon-user-plus"></span>
+        </div>
+      </div>
+    );
   else
     return (
       <div className="card__actions">
         <div
-          className="card__actions__add"
+          className="card__actions__list"
           onClick={() => {
-            console.log(currentUser);
-            addFriend(id, currentUser);
+            setShowList(true);
           }}
         >
-          <span className="icon-user-plus"></span>
+          <span className="icon-list2"></span>
+        </div>
+        <div
+          className="card__actions__add"
+          onClick={() => {
+            addFriend(id, currentUser, reqId);
+          }}
+        >
+          <span className="icon-checkmark"></span>
         </div>
       </div>
     );
@@ -160,7 +196,55 @@ function returnFriendList(id, userName, fullDetails, setShowList) {
   );
 }
 
-async function addFriend(id, currentUserId) {
+async function addFriend(id, currentUserId, reqId) {
+  await postFriendRelation(id, currentUserId);
+  await postFriendRelation(currentUserId, id);
+
+  await deleteFriendRequest(reqId);
+}
+
+async function postFriendRelation(firstUser, secondUser) {
+  const URL = "http://localhost:8081/api/friendshipRelation/postFriendShip";
+
+  const body = {
+    sender_id: firstUser,
+    receiver_id: secondUser,
+    category: "Unset",
+  };
+
+  await fetch(URL, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(body),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+async function deleteFriendRequest(reqId) {
+  const URL =
+    "http://localhost:8081/api/friendshipRequest/deleteFriendRequests/" + reqId;
+
+  fetch(URL, {
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+async function acceptFriend(id, currentUserId) {
   const URL = "http://localhost:8081/api/friendshipRequest/postFrRequest";
 
   const isoDateString = new Date().toISOString();
