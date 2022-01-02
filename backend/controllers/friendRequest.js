@@ -1,6 +1,5 @@
 const FriendshipRequestDB = require("./../models").FriendshipRequest;
 const UsersDB = require("./../models").User;
-const Sequelize = require("sequelize");
 
 function isIdUnique(sender_id, receiver_id) {
   return FriendshipRequestDB.count({

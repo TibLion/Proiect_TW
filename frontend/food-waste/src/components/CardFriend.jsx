@@ -152,6 +152,7 @@ function returnActions(
           className="card__actions__add"
           onClick={() => {
             addFriend(id, currentUser, reqId);
+            refresh(val);
           }}
         >
           <span className="icon-checkmark"></span>
