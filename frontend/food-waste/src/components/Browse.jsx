@@ -28,8 +28,12 @@ function ReturnPageDecider(type, id) {
       return returnBrowsePeople(data, id);
 
     case "yitem":
+      if (last != "yitem") {
+        setData(null);
+        setLast("yitem");
+      }
       SearchForYourItemsByName(data, setData, id);
-      return returnBrowseYourItems(data);
+      return returnBrowseYourItems(data, setLast);
 
     case "ypeople":
       return returnBrowseYourPeople();
@@ -131,20 +135,20 @@ function SearchForUsersByName(data, setData) {
 
 //#endregion
 
-//#region Browse Items
+//#region Browse Your Items
 
-function returnBrowseYourItems(data) {
+function returnBrowseYourItems(data, setLast) {
   return (
     <div className="foodMenu">
       <p className="foodMenu__title">Your search results: </p>
-      <div className="foodMenu__items"> {dataYourItem(data)}</div>
+      <div className="foodMenu__items"> {dataYourItem(data, setLast)}</div>
     </div>
   );
 }
 
-function dataYourItem(data) {
+function dataYourItem(data, setLast) {
   return data?.map((item) => {
-    return <CardItems item={item} />;
+    return <CardItems item={item} refresh={setLast} val={true} />;
   });
 }
 
