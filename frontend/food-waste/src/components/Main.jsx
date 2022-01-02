@@ -120,7 +120,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
         Browse in your Friends
       </div>
     );
-  else if (pageToShow === "notifFrReq")
+  else if (pageToShow === "icon-users")
     return (
       <div className="">
         {" "}
@@ -133,7 +133,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
         Notification Friend request
       </div>
     );
-  else if (pageToShow === "notifExpirationReq")
+  else if (pageToShow === "icon-calendar")
     return (
       <div className="">
         {" "}
@@ -146,7 +146,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
         Notification Expiration Request
       </div>
     );
-  else if (pageToShow === "notifFoodRequest")
+  else if (pageToShow === "icon-spoon-knife")
     return (
       <div className="">
         {" "}

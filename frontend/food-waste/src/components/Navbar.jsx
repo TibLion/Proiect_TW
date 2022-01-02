@@ -122,7 +122,7 @@ function returnNavbar(
 
           <div className="navbar__rightSide">
             {dispalyUserInformations(userInformations)}
-            {returnNotifications(notifications)}
+            {returnNotifications(notifications, pageSelector.nextPage)}
             {openMenu(menuState.toggleMenu, menuState.setToggleMenu)}
           </div>
         </div>
@@ -149,6 +149,7 @@ function returnNavbar(
     );
 }
 
+//#region functions for search bar
 function SearchForUsersByName(e) {
   selectThisItem(e);
 
@@ -233,6 +234,7 @@ function SearchForFriendByNameAndId(e, id) {
         console.log(error);
       });
 }
+//#endregion
 
 //
 function selectThisItem(e) {
@@ -251,23 +253,27 @@ function clearSelectedSearchItem() {
 //#region  Notifications
 
 //return the Html notification content
-function returnNotifications(notifications) {
+function returnNotifications(notifications, nextPage) {
   return (
     <div className="row">
-      {returnNotification("icon-users", notifications.friendRequest)}
-      {returnNotification("icon-calendar", notifications.expireSoon)}
-      {returnNotification("icon-spoon-knife", notifications.foodRequest)}
+      {returnNotification("icon-users", notifications.friendRequest, nextPage)}
+      {returnNotification("icon-calendar", notifications.expireSoon, nextPage)}
+      {returnNotification(
+        "icon-spoon-knife",
+        notifications.foodRequest,
+        nextPage
+      )}
     </div>
   );
 }
 
 //return every notiviation(if there are notif, show the number, if not, don't show anything)
-function returnNotification(icon, data) {
+function returnNotification(icon, data, nextPage) {
   const className = "navbar__icon navbar__icon--withNotification " + icon;
 
   if (data > 0)
     return (
-      <span className={className}>
+      <span className={className} onClick={() => nextPage(icon)}>
         <p className={"navbar__icon__notification"}>{data}</p>
       </span>
     );
