@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import Browse from "./Browse";
 import FoodMenu from "./FoodMenu";
 import FriendsMenu from "./FriendsMenu";
 import LoginCycle from "./LoginCycle";
@@ -78,7 +79,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Browse Item
+        <Browse type={"item"} currentUser={user.id} />
       </div>
     );
   else if (pageToShow === "browsePeople")
@@ -91,7 +92,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Browse People
+        <Browse type={"people"} currentUser={user.id} />
       </div>
     );
   else if (pageToShow === "browseInYourFood")
@@ -104,7 +105,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Browse in your food
+        <Browse type={"yitem"} currentUser={user.id} />
       </div>
     );
   else if (pageToShow === "browseInYourFriends")
@@ -117,7 +118,7 @@ function ReturnPageDecider(infoForNavbar, pageToShow, setPageToShow, user) {
           currentPage={pageToShow}
           setPage={setPageToShow}
         />
-        Browse in your Friends
+        <Browse type={"ypeople"} currentUser={user.id} />
       </div>
     );
   else if (pageToShow === "icon-users")

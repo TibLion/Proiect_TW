@@ -2,7 +2,9 @@
   justify-content: space-between;
   background-color: $secondary;
   align-items: center;
-
+  * {
+    z-index: 9;
+  }
   // position: fixed;
   // width: 100%;
 
