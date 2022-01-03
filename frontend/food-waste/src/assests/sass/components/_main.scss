@@ -42,12 +42,11 @@
       &__items {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
         flex-wrap: wrap;
 
         .card {
           width: 48%;
-          height: 27.5vh;
           margin-top: 25px;
         }
       }
