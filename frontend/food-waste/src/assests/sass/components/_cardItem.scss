@@ -3,27 +3,6 @@
   &:focus {
     & .card__actions {
       display: flex;
-      align-items: center;
-
-      &__userInfo {
-        display: flex;
-        align-items: center;
-
-        &__name {
-          font-size: 15px;
-        }
-
-        &__photo {
-          $size: 50px;
-
-          width: $size;
-          height: $size;
-
-          border-radius: 100%;
-
-          object-fit: cover;
-        }
-      }
     }
   }
   &__item {
