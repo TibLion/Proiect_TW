@@ -15,12 +15,13 @@
     align-items: center;
     justify-content: flex-end;
     color: $secondary;
+
     &:hover {
       display: flex;
     }
 
     * {
-      margin: 0.5em;
+      margin: 0 0.5em;
       cursor: pointer;
     }
 
