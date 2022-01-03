@@ -29,11 +29,12 @@ const controller = {
       .findAll({
         where: {
           sender_id: userId,
+          status: "PENDING",
         },
         include: [
           {
             model: UsersDB,
-            as: "SenderId",
+            as: "ReceiverId",
           },
           {
             model: ItemDB,
@@ -57,11 +58,12 @@ const controller = {
       .findAll({
         where: {
           receiver_id: userId,
+          status: "PENDING",
         },
         include: [
           {
             model: UsersDB,
-            as: "ReceiverId",
+            as: "SenderId",
           },
           {
             model: ItemDB,
@@ -101,5 +103,70 @@ const controller = {
           res.status(500).send({ message: "Server error" });
         });
   },
+  acceptRequest: async (req, res) => {
+    const { id, item_id } = req.params;
+    itemRequestDB
+      .update(
+        {
+          status: "REFUSED",
+        },
+        {
+          where: {
+            item_id: item_id,
+          },
+        }
+      )
+
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+    itemRequestDB
+      .update(
+        {
+          status: "ACCEPTED",
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      )
+
+      .then((item) => {
+        res.status(200).send(item);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  // deleteRequest: async (req, res) => {
+  //   const { id, item_id } = req.params;
+  //   if (id < 0) {
+  //     res.status(400).send({ message: "User doesn't exist" });
+  //   }
+  //   itemRequestDB
+  //     .destroy({
+  //       id: id,
+  //     })
+  //     .then((item) => {
+  //       res.status(200).send(item);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       res.status(500).send({ message: "Server error" });
+  //     })
+  //     .destroy({
+  //       item_id: item_id,
+  //     })
+  //     .then((item) => {
+  //       res.status(200).send(item);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       res.status(500).send({ message: "Server error" });
+  //     });
+  // },
 };
 module.exports = controller;

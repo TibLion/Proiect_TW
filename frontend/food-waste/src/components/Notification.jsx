@@ -32,7 +32,8 @@ function ReturnNotification(type, id) {
         setNotif(null);
         setLast("food");
       }
-      return <div className=""> food</div>;
+      GetItemRequests(notif, setNotif, id);
+      return returnItemRequest(notif, id, setNotif);
   }
 }
 
@@ -156,5 +157,48 @@ function nextweek() {
   );
   return nextweek;
 }
+
+//#endregion
+
+//#region Food Reqest
+
+function returnItemRequest(notif, id, setNotif) {
+  return (
+    <div className="friendMenu">
+      <p className="friendMenu__title">Required things: </p>
+      <div className="friendMenu__friends"> {ItemRequest(notif)}</div>
+    </div>
+  );
+}
+
+function ItemRequest(notif) {
+  return notif?.map((item) => {
+    return (
+      <CardItems
+        item={item.Item}
+        friendDetails={item.SenderId}
+        relationId={item.id}
+      />
+    );
+  });
+}
+
+function GetItemRequests(notif, setNotif, id) {
+  const URL = "http://localhost:8081/api/itemRequest/getAllByReceiverId/" + id;
+
+  if (notif == null)
+    fetch(URL, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setNotif(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+//#endregion
 
 export default Notification;

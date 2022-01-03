@@ -18,7 +18,9 @@ function CardItems(props) {
     refreshAction,
     props.isYou,
     props.relationshipDetails,
-    props.item.id
+    props.item.id,
+    props.friendDetails,
+    props.relationId
   );
 }
 
@@ -33,7 +35,9 @@ function ReturnCarditem(
   refreshAction,
   isYou,
   relationshipDetails,
-  id
+  id,
+  friendDetails,
+  relationId
 ) {
   const [edit, setEdit] = useState(false);
   if (edit === false) {
@@ -60,7 +64,9 @@ function ReturnCarditem(
           isYou,
           setEdit,
           relationshipDetails,
-          id
+          id,
+          friendDetails,
+          relationId
         )}
       </div>
     );
@@ -79,51 +85,75 @@ function returnOptions(
   isYou,
   setEdit,
   relationshipDetails,
-  id
+  id,
+  friendDetails,
+  relationId
 ) {
-  if (isYou != undefined && isYou === false) {
+  if (friendDetails == undefined) {
+    if (isYou != undefined && isYou === false) {
+      return (
+        <div className="card__actions">
+          <div
+            className="card__action__claim"
+            onClick={() => {
+              postItemRequest(relationshipDetails, id);
+            }}
+          >
+            <span className="icon-checkmark"></span>
+          </div>
+        </div>
+      );
+    } else
+      return (
+        <div className="card__actions">
+          <div
+            className="card__actions__edit"
+            onClick={() => {
+              setEdit(true);
+            }}
+          >
+            <span className="icon-pencil"></span>
+          </div>
+          <div
+            className="card__actions__delete"
+            onClick={() => {
+              deleteItem(allInfos);
+              refreshAction.action(!refreshAction.value);
+            }}
+          >
+            <span className="icon-bin2"></span>
+          </div>
+          {returnShare(
+            name,
+            category,
+            description,
+            isAvailable,
+            allInfos,
+            refreshAction
+          )}
+        </div>
+      );
+  } else {
     return (
       <div className="card__actions">
+        <div className="card__actions__userInfo">
+          <p className="card__actions__userInfo__name">{friendDetails.name}</p>
+          <img
+            src={friendDetails.photo}
+            className="card__actions__userInfo__photo"
+          />
+        </div>
         <div
-          className="card__action__claim"
+          className="card__actions__add"
           onClick={() => {
-            postItemRequest(relationshipDetails, id);
+            acceptFoodRequest(relationId, allInfos, friendDetails.id);
           }}
         >
           <span className="icon-checkmark"></span>
         </div>
       </div>
     );
-  } else
-    return (
-      <div className="card__actions">
-        <div
-          className="card__actions__edit"
-          onClick={() => {
-            setEdit(true);
-          }}
-        >
-          <span className="icon-pencil"></span>
-        </div>
-        <div
-          className="card__actions__delete"
-          onClick={() => {
-            deleteItem(allInfos);
-            refreshAction.action(!refreshAction.value);
-          }}
-        >
-          <span className="icon-bin2"></span>
-        </div>
-        {returnShare(
-          name,
-          category,
-          description,
-          isAvailable,
-          allInfos,
-          refreshAction
-        )}
-      </div>
-    );
+  }
 }
 
 //return the Html content
@@ -256,6 +286,55 @@ async function postItemRequest(relationshipDetails, id) {
       "Content-Type": "application/json",
     },
     method: "POST",
+    body: JSON.stringify(body),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+async function acceptFoodRequest(relationId, item, otherUserId) {
+  let URL =
+    "http://localhost:8081/api/itemRequest/accept/" +
+    relationId +
+    "/" +
+    item.id;
+
+  await fetch(URL, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  URL = "http://localhost:8081/api/item/putItem";
+
+  const body = {
+    id: item.id,
+    user_id: otherUserId,
+    name: item.name,
+    description: item.description,
+    quantity: item.quantity,
+    category: item.category,
+    expirationDate: item.expirationDate,
+    isAvailable: 0,
+    photo: item.photo,
+  };
+  console.log(body);
+
+  await fetch(URL, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
     body: JSON.stringify(body),
   })
     .then((res) => res.json())
