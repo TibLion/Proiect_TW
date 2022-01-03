@@ -59,7 +59,8 @@ function ReturnCardFriend(
           val,
           currentUser,
           isRequest,
-          reqId
+          reqId,
+          fullDetails
         )}
       </div>
     );
@@ -83,12 +84,25 @@ function returnActions(
   val,
   currentUser,
   isRequest,
-  reqId
+  reqId,
+  fullDetails
 ) {
-  console.log(reqId);
   if (isFriend != false && isRequest != true)
     return (
       <div className="card__actions">
+        <div className="card__actions__sendMail">
+          <a
+            href={
+              "mailto:" +
+              fullDetails.User.email +
+              "?subject=%5BAnti-Food%20Waste%5D%20Look%20at%20my%20list&body=Hi%20" +
+              fullDetails.User.name +
+              "%2C%0D%0AI%20want%20you%20to%20look%20at%20my%20list%20of%20valid%20products%2C%20I%20think%20you'll%20find%20something%20you'll%20like.%0D%0A%0D%0AYou%20can%20find%20the%20application%20here%3A%0D%0Ahttps%3A%2F%2Fgithub.com%2FBaltacMihai%2FAnti-Food-Waste-App"
+            }
+          >
+            <span className="icon-mail"></span>
+          </a>
+        </div>
         <div
           className="card__actions__list"
           onClick={() => {
