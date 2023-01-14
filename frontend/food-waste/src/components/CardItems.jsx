@@ -179,7 +179,7 @@ function returnShare(
         </div>
 
         <FacebookShareButton
-          //url={"https://github.com/TibLion/Proiect_TW"}
+          url={"https://github.com/TibLion/Proiect_TW"}
           quote={"I don't want to waste " + name + ", so i share with you"}
           hashtag={"#" + category}
           description={description}
