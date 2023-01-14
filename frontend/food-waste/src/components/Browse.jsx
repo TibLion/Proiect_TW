@@ -178,7 +178,6 @@ function SearchForYourItemsByName(data, setData, id) {
 }
 
 //#endregion
-
 //#region Browse People
 function returnBrowseYourPeople(data, setLast) {
   return (
