@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import Navbar from "./Navbar";
 
-import loginPhoto from "./../assests/image/login.svg";
-import registerPhoto from "./../assests/image/register.svg";
+import loginPhoto from "./../assests/image/images.jpg";
+// import registerPhoto from "./../assests/image/register.svg";
 import Popup from "./Popup";
 
 function LoginCycle(props) {
@@ -27,14 +27,15 @@ function returnLoginLayout(setUser, setSwitchLoginRegister) {
   return (
     <div>
       <Navbar />
-      <div className="row login__container">
-        <img src={loginPhoto} />
+      <div id="bgLogin" className="row login__container">
+        <img id="food--photo" src={loginPhoto}/>
 
         <div className="column login__container__form">
           <div className="login__container__form__info">
-            <h2 className="login__container__form__info__title">Sign in</h2>
+            <h2 className="login__container__form__info__title"> Sign in here!</h2>
             <p className="login__container__form__info__subtitle">
-              Don't have an account yet?{" "}
+              Don't have an account yet? <br></br>
+              Press here to make one! <br></br> <br></br> {" "}
               <span onClick={(e) => setSwitchLoginRegister(2)}>Sign Up.</span>
             </p>
           </div>
@@ -58,7 +59,7 @@ function returnLoginLayout(setUser, setSwitchLoginRegister) {
             className="button button--active"
             onClick={(e) => submitLogin(accountInfo, setUser)}
           >
-            <span>Login</span> <span>{"->"}</span>
+            <span>Login</span> 
           </div>
         </div>
       </div>
@@ -124,7 +125,7 @@ function returnRegisterLayout(setUser, setSwitchLoginRegister) {
     <div>
       <Navbar />
       <div className="row login__container">
-        <img src={registerPhoto} />
+        {/* <img src={registerPhoto} /> */}
 
         <div className="column login__container__form">
           <div className="login__container__form__info">
@@ -190,7 +191,7 @@ function returnRegisterLayout(setUser, setSwitchLoginRegister) {
               submitRegister(accountInfo, setUser, setSwitchLoginRegister)
             }
           >
-            <span>Register</span> <span>{"->"}</span>
+            <span>Register</span>
           </div>
         </div>
       </div>
