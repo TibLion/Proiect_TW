@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import menuImage from "./../assests/image/menu.svg";
+// import menuImage from "./../assests/image/menu.svg";
 function Menu(props) {
   useEffect(() => {
     let current = document.getElementById(
@@ -48,9 +48,8 @@ function returnMenu(changePages, display) {
             Your Friends
           </p>
         </div>
-        <img src={menuImage} alt="" className="menu__conainter__image" />
+        {/* <img src={menuImage} alt="" className="menu__conainter__image" /> */}
       </div>
-      <p className="menu__logout">Log Out</p>
     </div>
   );
 }
