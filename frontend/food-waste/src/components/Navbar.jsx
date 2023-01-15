@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import logo from "./../assests/image/logo.png";
+import logo from "./../assests/image/food-share.png";
 import defaultUserPhoto from "./../assests/image/defaultUserPicture.png";
 import Menu from "./Menu";
 
@@ -69,7 +69,7 @@ function returnNavbar(
       <div className="nav">
         <div className="row navbar">
           <div className="navbar__leftSide">
-            <img src={logo} alt="logo" className="navbar__logo" />
+            <img id="logo" src={logo} alt="logo" className="navbar__logo" />
             <div className="navbar__searchBar">
               <div className="input">
                 <input
@@ -139,7 +139,7 @@ function returnNavbar(
       <div className="nav">
         <div className="row navbar">
           <div className="navbar__leftSide">
-            <img src={logo} alt="logo" className="navbar__logo" />
+            <img id="logo" src={logo} alt="logo" className="navbar__logo" />
           </div>
 
           <div className="navbar__rightSide">
