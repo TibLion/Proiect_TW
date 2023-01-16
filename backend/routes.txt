@@ -1,0 +1,150 @@
+// The app requires a mysql database named foodwaste to run properly. 
+During the development of this project we utilized xampp control panel to start the server. 
+To create the tables you can use the /reset route
+
+
+//Global: 
+
+http://localhost:8081/reset
+-- restarts the database (deletes the tabels if they exists and create new ones)
+
+//
+
+//User:
+http://localhost:8081/api/User/verifyUser/{email}/{password}
+-- get user account by email and password
+
+
+http://localhost:8081/api/User/findByName/{name}
+-- find user by name
+
+http://localhost:8081/api/User/findById/{id}
+-- find user by id
+
+http://localhost:8081/api/user/createNewUser
+-- post new user
+{
+    "email" : "",
+    "name": "",
+    "password": "",
+    "photo": ""
+}
+//
+
+
+
+//Items:
+http://localhost:8081/api/Item/getAllItems
+-- get all the items
+
+http://localhost:8081/api/item/getAllItemsByUserId/{userId}
+-- get all the user items by userId
+
+http://localhost:8081/api/Item/getAllItemsByItemId/{itemId}
+-- get the item by itemId
+
+http://localhost:8081/api/Item/getAllItemsByName/{name}
+-- get the items by name
+
+http://localhost:8081/api/Item/getAllItemsByName/{name}/{userId}
+-- get the item by name and userId
+
+http://localhost:8081/api/Item//deleteItemById/{itemId}/{userID}
+-- delete item by item id and user id
+
+http://localhost:8081/api/item/postItem
+-- post item
+{
+     "user_id": user_id,
+      "name": "name",
+      "description": "description",
+      "quantity": quantity,
+      "category": "category",
+      "expirationDate": "expirationDate",
+      "isAvailable": isAvailable,
+      "photo": ""
+}
+
+http://localhost:8081/api/item/putItem
+-- put item 
+{
+    "id": 2,
+    "user_id": 2,
+    "name": "",
+    "description": "",
+    "quantity": 122,
+    "category": "",
+    "expirationDate": "2021-12-12T00:00:00.000Z",
+    "isAvailable": true
+}
+//
+
+
+//FriendshipRequest
+
+http://localhost:8081/api/friendshipRequest/postFrRequest
+-- post friendshipRequest
+
+{
+    "sender_id": 1,
+    "receiver_id": 2,
+    "date": "2021-12-12"
+}
+
+http://localhost:8081/api/friendshipRequest/getAllReceivedFriendRequests/{receiver_id}
+-- get all the friend request by receiver_id
+
+http://localhost:8081/api/friendshipRequest/deleteFriendRequests/{id}
+-- delete the friendshipRequest by id
+
+
+
+//
+
+//Item request
+http://localhost:8081/api/itemRequest/getAllByReceiverId/1
+-- get all the requests received by user id (receiver)
+
+http://localhost:8081/api/itemRequest/getAllBySenderId/1
+-- get all the requests made by user id (sender)
+
+
+http://localhost:8081/api/itemRequest/postItemRequest
+-- post item request
+
+{
+    "sender_id": 1,
+    "receiver_id": 2,
+    "date": "2021-12-12",
+    "item_id": 1,
+    "status": "PENDING"
+    }
+
+
+//
+
+// Friendship Relationship
+
+http://localhost:8081/api/friendshipRelation/postFriendShip
+-- post friendship Relationship
+
+{
+    "sender_id": 2,
+    "receiver_id": 1,
+    "category": "Lactate"
+    }
+
+
+http://localhost:8081/api/friendshipRelation/getFriendshipRel/{user_id}
+-- get all the friendship relations by user
+
+ "http://localhost:8081/api/friendshipRelation/getFriendshipRel/{user_id}/{name}" +
+-- get all the friends with the searched Name
+
+http://localhost:8081/api/friendshipRelation/putFriendShip
+-- modify the Friendship
+
+
+http://localhost:8081/api/friendshipRelation/deleteFriend/{frindshipRel_id}
+-- delete the Friendship by id
+//
