@@ -32,7 +32,6 @@ const controller = {
         include: [
           {
             model: UsersDB,
-            // where: ["sender_id = id"],
           },
         ],
       })
