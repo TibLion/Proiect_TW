@@ -22,7 +22,7 @@ const controller = {
   getFriendshipRel: async (req, res) => {
     const { userId } = req.params;
     if (userId < 0) {
-      res.status(400).send({ message: "Friendship  doesn't exist" });
+      res.status(400).send({ message: "Friendship doesn't exist" });
     }
     friendRelDB
       .findAll({
